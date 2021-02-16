@@ -8,7 +8,7 @@
 			{{ it.name }}
 		</div>
 		<hr>
-		<input type="button" value="Ok" @click="done" />
+		<b-button variant="success" @click="done" >Ok</b-button>
 	</div>
 </template>
 

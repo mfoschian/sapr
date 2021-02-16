@@ -1,15 +1,18 @@
 <template>
 	<div id="app">
-		<item-chooser
-			label="Scegli UAV"
-			:items="uav"
-			:available="items_of_type(['UAV_1', 'UAV_2'])"
-			@confirmed="confirmed"
-		/>
+		<b-modal v-model="show_dialog">
+			<item-chooser
+				label="Scegli UAV"
+				:selected="uav"
+				:available="free_items_of_type(['UAV_1', 'UAV_2'])"
+				@confirmed="confirmed"
+			/>
+			<template #modal-footer=""></template>
+		</b-modal>
+		<b-button variant="success" @click="show_dialog=true">Scegli UAV</b-button>
 		<hr>
 		<pre>
 			{{ uav }}
-			{{ the_items }}
 		</pre>
 	</div>
 </template>
@@ -53,30 +56,33 @@ export default {
 	data() {
 		return {
 			uav: null,
-			the_items: Items
+			the_items: Items,
+			show_dialog: false
 		};
 	},
 	computed: {
 		available() {
-			return Items.filter( x => x.used == false );
+			return this.the_items.filter( x => x.used == false );
 		}
 	},
 	methods: {
-		items_of_type( ta ) {
+		free_items_of_type( ta ) {
 			let its = Array.isArray( ta ) ? ta : [ ta ];
-			return Items.filter( x => its.indexOf( x.type ) >= 0 );
+			return this.the_items.filter( x => its.indexOf( x.type ) >= 0 && x.used == false );
 		},
 		confirmed(id) {
+
+			this.show_dialog = false;
 
 			if( this.uav && this.uav.id == id )
 				return;
 
 			if( this.uav && this.uav.id ) {
-				let old = Items.filter( x => x.id == this.uav.id )[0];
+				let old = this.the_items.filter( x => x.id == this.uav.id )[0];
 				if( old )
 					old.used = false;
 			}
-			this.uav = Items.filter( x => x.id == id )[0];
+			this.uav = this.the_items.filter( x => x.id == id )[0];
 			if( this.uav )
 				this.uav.used = true;
 		}
