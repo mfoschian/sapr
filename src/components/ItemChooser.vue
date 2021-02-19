@@ -1,6 +1,6 @@
 <template>
-	<div >
-		<h2>{{ label }}</h2>
+	<div align="center">
+		<h2 v-if="label">{{ label }}</h2>
 		<div v-for="it in items" :key="it.id"
 			class="item" :class="{used: it.id == selected_id}"
 			@click="use(it.id)"
@@ -8,7 +8,9 @@
 			{{ it.name }}
 		</div>
 		<hr>
-		<b-button variant="success" @click="done" >Ok</b-button>
+		<div align="center">
+			<b-button variant="success" @click="done" >Ok</b-button>
+		</div>
 	</div>
 </template>
 
@@ -16,7 +18,7 @@
 <script>
 export default {
 	props: {
-		label: { type: String, default:"Scegli un oggetto" },
+		label: { type: String, default:"" },
 		selected: { type: Object, default: () => null },
 		available: { type: Array, default: () => [] },
 	},
@@ -48,12 +50,14 @@ export default {
 	.item {
 		display: inline-block;
 		width: 5em;
-		height: 1.5em;
+		height: 2em;
 		background-color: antiquewhite;
 		border: 1px solid black;
 		border-radius: 10px;
 		padding: 0.3em;
 		cursor: pointer;
+		text-align: center;
+		margin-right: 0.5em;
 	}
 	.item.used {
 		background-color: cadetblue;
