@@ -7,25 +7,8 @@
 				:available="dlg_available"
 				@confirmed="confirmed"
 			/>
-			<!-- <template #modal-footer=""></template> -->
 		</b-modal>
-		<!-- <b-button variant="success" @click="add_first_slot">Scegli UAV</b-button> -->
 		<hr>
-<!--
-		<ul class="object_list">
-			<li v-for="s in slots" :key="s.id">
-				<div class="object_slot d-flex">
-					<div class="flex-shrink-1 slot-label">{{ s.label }}</div>
-					<div class="flex-grow-1 slot-content" @click="choose_for(s)">
-						<span v-if="s.item">{{ s.item.name }}</span>
-						<span v-else >{{ s.placeholder }}</span>
-					</div>
-
-				</div>
-			</li>
-		</ul>
-		<hr>
--->
 		<b-container fluid class="slot_list">
 			<b-row v-for="s in slots" :key="s.id">
 				<b-col cols="2" class="slot-label">{{ s.label }}</b-col>
@@ -38,38 +21,8 @@
 <script>
 import ItemChooser from './components/ItemChooser'
 
-//eslint-disable-next-line
-let slot_templates = {
-	UAV: {
-		label: "Scegli il drone",
-		slots: [
-			{ label: "Drone", placeholder: "Scegli il drone", type: ["UAV_1", "UAV_2"], required: true }
-		]
-	},
-	UAV_1: {
-		label: "Equipaggia il drone",
-		slots: [
-			{ label: "Batteria 1", type: ["Battery1", "Battery2"], required: true },
-			{ label: "Batteria 2", type: ["Battery1", "Battery2"], required: true },
-			{ label: "Telecomando", type: "Remote1", required: true },
-			{ label: "Fotocamera", type: ["Cam","FLIR"], required: false },
-		]
-	}
-
-};
-
-let Items = [
-	{ name: "UAV 1", type: "UAV_1", id: "{1111}", used: false, slots: "UAV_1" },
-	{ name: "UAV 2", type: "UAV_2", id: "{2222}", used: false, slots: "UAV_2" },
-	{ name: "Batteria 1", type: "Battery1", id: "{BBBB.1111}", used: false },
-	{ name: "Batteria 2", type: "Battery1", id: "{BBBB.1112}", used: false },
-	{ name: "Batteria X1", type: "Battery2", id: "{BBXX.1111}", used: false },
-	{ name: "Batteria X2", type: "Battery2", id: "{BBXX.1112}", used: false },
-	{ name: "Telecomando M5", type: "Remote1", id: "RC_1", used: false },
-	{ name: "FLIR", type: "FLIR", id: "FLIR_A", used: false },
-	{ name: "WebCam", type: "Cam", id: "Webcam_HD_1", used: false },
-];
-
+import Equipment from '@/models/Equipment'
+import SlotTemplate from '@/models/SlotTemplate'
 
 export default {
 	name: 'app',
@@ -83,9 +36,11 @@ export default {
 		return {
 			dlg_item: null,
 			dlg_available: [],
-			the_items: Items,
+			the_items: [],
+			the_templates: {},
 			show_dialog: false,
 			slot_edited: null,
+
 
 			slots: [], // { label, type, required, item }
 		};
@@ -143,7 +98,7 @@ export default {
 				s.item = choosed_item;
 
 				// Add slot inferred by new item
-				let item_slot = slot_templates[s.item.slots] || { slots: [] };
+				let item_slot = this.the_templates[s.item.slots] || { slots: [] };
 				let item_slots = item_slot.slots;
 				for( let i=0; i<item_slots.length; i++ ) {
 					let child_s = item_slots[i];
@@ -172,9 +127,18 @@ export default {
 			this.show_dialog = true;
 		},
 	},
-	mounted() {
-		let s = slot_templates['UAV'].slots[0];
-		this.add_slot( 'UAV.1', s );
+	async mounted() {
+		debugger; // eslint-disable-line
+		try {
+			this.the_items = await Equipment.read_all();
+			this.the_templates = await SlotTemplate.read_all();
+
+			let s = this.the_templates['UAV'].slots[0];
+			this.add_slot( 'UAV.1', s );
+		}
+		catch( err ) {
+			console.error( err ); // eslint-disable-line
+		}
 	},
 }
 </script>

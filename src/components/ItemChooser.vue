@@ -43,6 +43,14 @@ export default {
 			this.$emit('confirmed', this.selected_id );
 		}
 	},
+	/*
+	watch: {
+		available: function(value) {
+			console.log( 'watch triggered'); // eslint-disable-line
+			this.load_data();
+		}
+	},
+	*/
 }
 </script>
 
