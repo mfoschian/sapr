@@ -2,10 +2,10 @@
 	<b-container fluid class="slot_list">
 		<b-row v-if="descriptor != null">
 			<b-col cols="2" class="slot-label">{{ descriptor.label }}</b-col>
-			<b-col cols="10" class="slot-content" @click.stop="choose_item">
-				<div>{{ item ? item.name : descriptor.placeholder }}</div>
-				<div class="slot-sub-content" v-for="s in childs" :key="s.id">
-					<equipment-slot :descriptor="s" />
+			<b-col cols="10" class="slot-content" >
+				<div @click.stop="choose_item" class="clickable">{{ loc_item ? loc_item.name : descriptor.placeholder }}</div>
+				<div class="slot-sub-content" v-for="s in item_slots" :key="s.id">
+					<equipment-slot :descriptor="s.descriptor" :id="s.id" :item="s.item" :parent_item_id="s.parent_item_id" />
 				</div>
 			</b-col>
 		</b-row>
@@ -24,15 +24,31 @@ export default {
 	name: 'EquipmentSlot',
 	inject: ['choose_item_for'],
 	props: {
-		descriptor: { type: Object, required: true },
+		descriptor: { type: Object, default: () => null },
+		item: { type: Object, default: () => null },
+		id: { type: String, default: () => null },
+		parent_item_id: { type: String, default: null }
 	},
 	data() {
 		return {
-			childs: [], // { label, type, required, item }
-			item: null,
+			loc_item: this.item,
 		};
 	},
 	computed: {
+		item_slots() {
+			if( this.loc_item == null ) return [];
+			let template = SlotTemplate.find_by_id( this.loc_item.descriptor || this.loc_item.type );
+			if( !template || !template.slots ) return [];
+
+			let childs = Equipment.get_childs_of( this.loc_item.id );
+			let res = template.slots.map( s => ({
+				descriptor: s,
+				item: childs.filter( x => s.slot == x.id )[0],
+				id: s.id,
+				parent_item_id: this.loc_item.id
+			}));
+			return res;
+		}
 	},
 	methods: {
 		add_slot( id, slot_template ) {
@@ -41,59 +57,29 @@ export default {
 				label: slot_template.label,
 				type: slot_template.type,
 				required: slot_template.required,
-				placeholder: slot_template.placeholder,
-				item: null
+				placeholder: slot_template.placeholder
 			};
 			this.childs.push( descriptor );
 		},
 		async choose_item() {
 			// console.log( s ); // eslint-disable-line
-			let res = await this.choose_item_for( this.descriptor );
+			let res = await this.choose_item_for( this.descriptor, this.loc_item );
 			console.log( res ); // eslint-disable-line
-
-
-			// debugger; // eslint-disable-line
 
 			if( res.new_id == null )
 				// no item change
 				return;
 
 			if( res.old_id != null ) {
-				// let old = this.equipments.filter( x => x.id == this.dlg_item.id )[0];
-				let old = await Equipment.find_by_id( res.old_id );
-				if( old ) {
-					/*
-					let sl = this.childs.filter( s => s.item && s.item.id == old.id )[0];
-					if( sl ) {
-						// remove old item from used
-						for( let i=0; i<this.childs.length; i++ ) {
-							let s = this.childs[i];
-							if( s.item ) {
-								s.item.used = false;
-							}
-						}
-
-						// remove old item inferred childs
-						let prefix = sl.id + '.';
-						this.childs = this.childs.filter( s => !s.id.startsWith(prefix) );
-					}
-					*/
-
-					old.used = false;
-				}
+				Equipment.free_childs_of( res.old_id );
+				Equipment.free( res.old_id )
 			}
-			let choosed_item = await Equipment.find_by_id( res.new_id );
+			let choosed_item = Equipment.find_by_id( res.new_id );
 			if( choosed_item ) {
-				// Set item as used
-				choosed_item.used = true;
-				this.item = choosed_item;
-
-				// Add descriptor inferred by new item
-				let descriptor = await SlotTemplate.find_by_id( choosed_item.descriptor );
-				if( descriptor ) {
-					this.childs = descriptor.slots || [];
-				}
+				Equipment.assign( choosed_item.id, this.id, this.parent_item_id);
 			}
+
+			this.loc_item = choosed_item;
 		},
 	},
 }
@@ -111,11 +97,14 @@ export default {
 
 .slot-content {
 	background-color: #ececec;
-	cursor: pointer;
 	padding-top: 0.5em;
 	margin-bottom: 0.5em;
 	border-top-right-radius: 0.4em;
 	border-bottom-right-radius: 0.4em;
+}
+
+.clickable {
+	cursor: pointer;
 }
 
 .suspance {

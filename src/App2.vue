@@ -2,7 +2,7 @@
 	<div id="app">
 		<ModalItemChooser ref="theDialog" />
 		
-		<equipment-slot :descriptor="item" />
+		<equipment-slot :descriptor="descriptor" id="root" />
 	</div>
 </template>
 
@@ -21,27 +21,26 @@ export default {
 	},
 	data() {
 		return {
-			item: null,
+			descriptor: null,
 		};
 	},
 	methods: {
 		add_slot( id, slot_template ) {
 			// debugger; // eslint-disable-line
-			this.item = {
+			this.descriptor = {
 				id: id,
 				label: slot_template.label,
 				type: slot_template.type,
 				required: slot_template.required,
-				placeholder: slot_template.placeholder,
-				item: null
+				placeholder: slot_template.placeholder
 			};
 		},
-		async choose_item_for( s ) {
+		async choose_item_for( s, item ) {
 			// console.log( s ); // eslint-disable-line
 			// debugger; // eslint-disable-line
 
-			let availables = await Equipment.free_items_of_type(s.type);
-			return this.$refs.theDialog.choose( availables, s.item );
+			let availables = Equipment.available_items_of_type(s.type);
+			return this.$refs.theDialog.choose( availables, item, s.placeholder );
 		},
 	},
 	provide() {
@@ -56,7 +55,7 @@ export default {
 			await SlotTemplate.read_all();
 
 			// debugger; // eslint-disable-line
-			let st = await SlotTemplate.find_by_id('UAV');
+			let st = SlotTemplate.find_by_id('UAV');
 			console.log( st ); // eslint-disable-line
 			if( !st || !st.slots ) {
 				console.error('Cannot find UAV template'); // eslint-disable-line

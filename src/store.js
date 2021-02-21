@@ -19,6 +19,19 @@ let _store = new Vuex.Store({
 	mutations: {
 		setEquipments( state, data ) { state.equipments = data;	},
 		setSlotTemplates( state, data ) { state.slot_templates = data; },
+		setEquipmentAssignment( state, data ) {
+			let eq = data.item;
+			if(!eq) return;
+
+			eq.slot = data.slot_id;
+			eq.parent = data.parent_id;
+		},
+		removeEquipmentAssignment( state, eq ) {
+			if(!eq) return;
+
+			eq.slot = null;
+			eq.parent = null;
+		}
 	},
 	actions: {
 		async loadEquipments( {commit} ) {
@@ -39,6 +52,12 @@ let _store = new Vuex.Store({
 				console.error( err ); // eslint-disable-line
 			}
 		},
+		assignEquipment( {commit}, data ) {
+			commit( 'setEquipmentAssignment', data );
+		},
+		freeEquipment( {commit}, data ) {
+			commit( 'removeEquipmentAssignment', data );
+		}
 	}
 });
 

@@ -1,5 +1,5 @@
 <template>
-	<b-modal v-model="show_dialog" :hide-footer="true" >
+	<b-modal v-model="show_dialog" :hide-footer="true" :title="title">
 		<item-chooser
 			:selected="dlg_item"
 			:available="dlg_available"
@@ -24,6 +24,7 @@ export default {
 			dlg_item: null,
 			dlg_available: [],
 			show_dialog: false,
+			title: null,
 		};
 	},
 	methods: {
@@ -40,7 +41,8 @@ export default {
 				new_id: id
 			});
 		},
-		async choose( availables, current_item ) {
+		async choose( availables, current_item, title ) {
+			this.title = title;
 			this.dlg_item = current_item;
 			this.dlg_available = availables;
 
