@@ -1,6 +1,6 @@
 <template>
 	<b-container fluid class="slot_list">
-		<b-row>
+		<b-row v-if="descriptor != null">
 			<b-col cols="2" class="slot-label">{{ descriptor.label }}</b-col>
 			<b-col cols="10" class="slot-content" @click.stop="choose_item">
 				<div>{{ item ? item.name : descriptor.placeholder }}</div>
@@ -8,6 +8,10 @@
 					<equipment-slot :descriptor="s" />
 				</div>
 			</b-col>
+		</b-row>
+		<b-row v-else>
+			<b-col cols="2" class="slot-label suspance"></b-col>
+			<b-col cols="10" class="slot-content suspance"></b-col>
 		</b-row>
 	</b-container>
 </template>
@@ -20,8 +24,6 @@ export default {
 	name: 'EquipmentSlot',
 	inject: ['choose_item_for'],
 	props: {
-		// equipments: { type: Array, required: true }, // vuex papable
-		// slot_templates: { type: Array, required: true }, // vuex papable
 		descriptor: { type: Object, required: true },
 	},
 	data() {
@@ -31,17 +33,8 @@ export default {
 		};
 	},
 	computed: {
-		equipments() { return this.$store.state.equipments; },
-		slot_templates() { return this.$store.state.slot_templates; },
-		available_items() {
-			return this.equipments.filter( x => x.used == false );
-		}
 	},
 	methods: {
-		free_items_of_type( ta ) {
-			let its = Array.isArray( ta ) ? ta : [ ta ];
-			return this.equipments.filter( x => its.indexOf( x.type ) >= 0 && x.used == false );
-		},
 		add_slot( id, slot_template ) {
 			let descriptor = {
 				id: id,
@@ -124,4 +117,9 @@ export default {
 	border-top-right-radius: 0.4em;
 	border-bottom-right-radius: 0.4em;
 }
+
+.suspance {
+	min-height: 2.5em;
+}
+
 </style>
