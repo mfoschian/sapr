@@ -20,3 +20,5 @@ yarn-error.log*
 *.sln
 *.sw?
 src/components/activity/activity-form.vue
+
+zia
