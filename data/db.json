@@ -1,4 +1,32 @@
 {
+	"pilots": [
+		{
+			"id": "{1234-5678-9abc-def0}",
+			"name": "Pilota Uno",
+			"user_code": "Pilot_001",
+			"operator_code": "Op001",
+			"EASA_code": "EASA_1"
+		},
+		{
+			"id": "{1234-5678-9abc-de10}",
+			"name": "Pilota Due",
+			"user_code": "Pilot_002",
+			"operator_code": "Op002",
+			"EASA_code": "EASA_2"
+		}
+	],
+	"uas": [
+		{
+			"id": "{1111}",
+			"nick": "Caccia 1",
+			"model": "MavcPRO",
+			"producer": "Producer 1",
+			"serail_number": "aabbccddeeff",
+			"mod_max": "10",
+			"plate": "TS123Z",
+			"authorized_for": ["IT-STS-01", "IT-STS-02"]
+		}
+	],
 	"equipments": [
 		{ "name": "UAV 1", "type": "UAV_1", "id": "{1111}", "descriptor": "UAV_1", "slot": null, "parent": null },
 		{ "name": "UAV 2", "type": "UAV_2", "id": "{2222}", "descriptor": "UAV_2", "slot": null, "parent": null },
