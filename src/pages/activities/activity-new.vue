@@ -1,35 +1,15 @@
 <template>
-	<div class="page">
-		<h3>Nuova attività</h3>
-		<div class="form-container">
-			<ActivityForm />
-		</div>
-
-	</div>
+	<BasePage title="Nuova attività" >
+		<ActivityForm @saved="$router.replace('/activities')" />
+	</BasePage>
 </template>
 
 <script>
-import { Activity } from '@/models/Activity'
+// import { Activity } from '@/models/Activity'
 import ActivityForm from '@/components/activity/activity-form'
+import BasePage from '@/pages/base-page'
 
 export default {
-	components: { ActivityForm },
-	data() {
-		return {
-			activity: new Activity()
-		}
-	},
-	computed: {
-
-	},
-	methods: {
-	}
+	components: { BasePage, ActivityForm }
 }
 </script>
-
-<style scoped>
-.form-container {
-	width: 100%;
-	padding: 1em;;
-}
-</style>

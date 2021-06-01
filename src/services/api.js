@@ -3,17 +3,18 @@ import axios from 'axios';
 
 const SERVER_URL = 'http://localhost:3000';
 
+function adjust_activity( a ) {
+	a.id = String(a.id);
+	if( typeof(a.dt) == 'string' )
+		a.dt = new Date( a.dt );
+}
 
 let API = {
 
 	get_activities: async function() {
 		return axios.get(SERVER_URL + '/activities').then( (result) => {
 			let res = result.data;
-			res.forEach(element => {
-				element.id = String(element.id);
-				if( typeof(element.dt) == 'string' )
-					element.dt = new Date( element.dt );
-			});
+			res.forEach( adjust_activity );
 			return res;
 		})
 	},

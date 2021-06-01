@@ -1,19 +1,16 @@
 <template>
-	<div class="page">
-		<h3>Modifica attività</h3>
-		<div class="form-container">
-			<ActivityForm :activity="activity" />
-		</div>
-
-	</div>
+	<BasePage title="Modifica attività" >
+		<ActivityForm :activity="activity" @saved="$router.replace('/activities')"/>
+	</BasePage>
 </template>
 
 <script>
 // import { Activity } from '@/models/Activity'
 import ActivityForm from '@/components/activity/activity-form'
+import BasePage from '@/pages/base-page'
 
 export default {
-	components: { ActivityForm },
+	components: { ActivityForm, BasePage },
 	props: {
 		activity: { type: Object, required: true }
 	},
@@ -24,10 +21,3 @@ export default {
 	}
 }
 </script>
-
-<style scoped>
-.form-container {
-	width: 100%;
-	padding: 1em;;
-}
-</style>

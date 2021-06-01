@@ -280,7 +280,7 @@ export default {
 			this.lat = pos.lat;
 			this.lon = pos.lon;
 		},
-		save_record() {
+		async save_record() {
 			let a = new Activity({
 				id: this.act_id,
 				title: this.title,
@@ -300,7 +300,8 @@ export default {
 			console.log( a ); // eslint-disable-line
 			
 			try {
-				a.save();
+				await a.save();
+				this.$emit('saved');
 			}
 			catch( err ) {
 				console.error( 'Cannot save activity:' ); // eslint-disable-line

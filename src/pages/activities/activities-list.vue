@@ -1,40 +1,38 @@
 <template>
-	<div>
+	<BasePage :title="title">
 		<ActivityViewer v-for="a in activities_to_show" :key="a.id"
 			class="list-item"
 			:activity="a"
 		/>
-	</div>
+	</BasePage>
 </template>
 
 <script>
 import ActivityViewer from '@/components/activity/activity-viewer'
-import { Activity } from '@/models/Activity.js'
+import BasePage from '@/pages/base-page'
 
 export default {
-	components: { ActivityViewer },
+	components: { BasePage, ActivityViewer },
 	props: {
-		limit: { type: Number, default: 5 }
-	},
-	data() {
-		return {
-			activities: []
-		};
+		limit: { type: Number, default: 5 },
+		activities: { type: Array, default: () => [] }
 	},
 	computed: {
 		activities_to_show() {
 			let res = this.activities.concat().sort( (a,b) => a.dt < b.dt ? 1 : a.dt > b.dt ? -1 : 0 );
 			return res.slice(0,this.limit);
+		},
+		title() {
+			let l = this.activities.length;
+			switch( l ) {
+				case 0: return "Nessuna attività da visualizzare";
+				case 1: return "Ecco l'unica attività che c'è";
+			}
+			if( l > this.limit )
+				return "Ultime " + this.limit + " attività di " + l;
+			return "Ci sono " + l + " attività";
 		}
 	},
-	methods: {
-		async load_items() {
-			this.activities = await Activity.read_all();
-		}
-	},
-	mounted() {
-		this.load_items();
-	}
 }
 </script>
 

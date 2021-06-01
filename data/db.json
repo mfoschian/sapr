@@ -45,6 +45,36 @@
       "scenary": 2,
       "flight_type": 2,
       "type": 1
+    },
+    {
+      "id": 3,
+      "title": "Altra Attività",
+      "dt": "2021-06-01T13:57:19.372Z",
+      "municipality_code": "030015",
+      "locality": "",
+      "alt": "89",
+      "lat": 46.0607063,
+      "lon": 13.2697371,
+      "flight_max_height": 100,
+      "category": 3,
+      "scenary": 2,
+      "flight_type": 4,
+      "type": 3
+    },
+    {
+      "id": 4,
+      "title": "Quarto volo",
+      "dt": "2021-06-01T15:01:00.000Z",
+      "municipality_code": "030052",
+      "locality": "",
+      "alt": 0,
+      "lat": 0,
+      "lon": 0,
+      "flight_max_height": "50",
+      "category": 4,
+      "scenary": 1,
+      "flight_type": 2,
+      "type": 5
     }
   ],
   "uas": [

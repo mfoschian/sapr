@@ -59,6 +59,15 @@
 			<b-col sm="10">{{ act_type_label }}</b-col>
 		</b-row>
 
+		<div class="buttons">
+			<b-button
+				variant="primary"
+				@click="add_mission"
+			>
+				<b-icon-record-circle />
+				Avvia missione
+			</b-button>
+		</div>
 	</b-container>
 </template>
 
@@ -98,7 +107,19 @@ export default {
 		},
 	},
 	methods: {
+		add_mission() {
+			this.$router.push({name: 'activity-missions', params: { activity: this.activity }})
+		}
 	}
 }
 </script>
 
+<style scoped>
+.buttons {
+	margin-top: 2.5em;
+	/* text-align: center; */
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+</style>
