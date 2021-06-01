@@ -1,6 +1,6 @@
 <template>
 	<b-button @click="geoFindMe" :variant="variant">
-		<b-spinner type="grow" v-if="spinner"> </b-spinner>
+		<span v-if="spinner" style="margin-right: 0.5em;"><b-spinner small type="grow"></b-spinner></span>
 		<slot>{{ text }}</slot>
 	</b-button>
 </template>
@@ -33,9 +33,12 @@ export default {
 
 		geoFindMe() {
 			if (!navigator.geolocation) {
+				this.variant = "danger";
 				this.$emit("error", "Geolocation is not supported by your browser");
 			} else {
 				this.spinner = true;
+				this.variant = "info";
+				this.$emit('reading');
 				navigator.geolocation.getCurrentPosition(
 					(position) => this.success(position),
 					() => this.error()

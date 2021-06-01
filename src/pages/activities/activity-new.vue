@@ -1,7 +1,9 @@
 <template>
 	<div class="page">
 		<h3>Nuova attività</h3>
-		<ActivityForm />
+		<div class="form-container">
+			<ActivityForm />
+		</div>
 
 	</div>
 </template>
@@ -24,3 +26,10 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+.form-container {
+	width: 100%;
+	padding: 1em;;
+}
+</style>

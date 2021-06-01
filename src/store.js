@@ -10,13 +10,23 @@ Vue.use(Vuex)
 
 let _store = new Vuex.Store({
 	state: {
+		activities: [],
 		equipments: [],
 		slot_templates: {},
+		on_line: true
 	},
 	getters: {
 
 	},
 	mutations: {
+		setActivities( state, data ) { state.activities = data;	},
+		addActivity( state, data ) { state.activities.push( data );	},
+		updateActivity( state, data ) {
+			let ix = state.activities.findIndex( a => a.id = data.id );
+			if( ix < 0 ) throw new Error( 'Activity not found' );
+			state.activities.splice( ix, 1, data );
+		},
+
 		setEquipments( state, data ) { state.equipments = data;	},
 		setSlotTemplates( state, data ) { state.slot_templates = data; },
 		setEquipmentAssignment( state, data ) {
@@ -34,6 +44,30 @@ let _store = new Vuex.Store({
 		}
 	},
 	actions: {
+		async loadActivities( {commit} ) {
+			try {
+				let data = await API.get_activities();
+				commit( 'setActivities', data );
+			}
+			catch( err ) {
+				console.error( err ); // eslint-disable-line
+			}
+		},
+		async saveActivity( {commit}, act ) {
+			try {
+				let is_new = act.id == null;
+				let data = await API.save_activity( act );
+				if( is_new )
+					commit( 'addActivity', data );
+				else
+					commit( 'updateActivity', data );
+			}
+			catch( err ) {
+				console.error( err ); // eslint-disable-line
+			}
+		},
+		
+		
 		async loadEquipments( {commit} ) {
 			try {
 				let data = await API.get_equipments();

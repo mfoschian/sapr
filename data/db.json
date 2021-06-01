@@ -1,56 +1,189 @@
 {
-	"pilots": [
-		{
-			"id": "{1234-5678-9abc-def0}",
-			"name": "Pilota Uno",
-			"user_code": "Pilot_001",
-			"operator_code": "Op001",
-			"EASA_code": "EASA_1"
-		},
-		{
-			"id": "{1234-5678-9abc-de10}",
-			"name": "Pilota Due",
-			"user_code": "Pilot_002",
-			"operator_code": "Op002",
-			"EASA_code": "EASA_2"
-		}
-	],
-	"uas": [
-		{
-			"id": "{1111}",
-			"nick": "Caccia 1",
-			"model": "MavcPRO",
-			"producer": "Producer 1",
-			"serail_number": "aabbccddeeff",
-			"mod_max": "10",
-			"plate": "TS123Z",
-			"authorized_for": ["IT-STS-01", "IT-STS-02"]
-		}
-	],
-	"equipments": [
-		{ "name": "UAV 1", "type": "UAV_1", "id": "{1111}", "descriptor": "UAV_1", "slot": null, "parent": null },
-		{ "name": "UAV 2", "type": "UAV_2", "id": "{2222}", "descriptor": "UAV_2", "slot": null, "parent": null },
-		{ "name": "Batteria 1", "type": "Battery1", "id": "{BBBB.1111}", "slot": null, "parent": null },
-		{ "name": "Batteria 2", "type": "Battery1", "id": "{BBBB.1112}", "slot": null, "parent": null },
-		{ "name": "Batteria X1", "type": "Battery2", "id": "{BBXX.1111}", "slot": null, "parent": null },
-		{ "name": "Batteria X2", "type": "Battery2", "id": "{BBXX.1112}", "slot": null, "parent": null },
-		{ "name": "Telecomando M5", "type": "Remote1", "id": "RC_1", "slot": null, "parent": null },
-		{ "name": "FLIR", "type": "FLIR", "id": "FLIR_A", "slot": null, "parent": null },
-		{ "name": "WebCam", "type": "Cam", "id": "Webcam_HD_1", "slot": null, "parent": null }
-	],
-	"templates": {
-		"UAV": {
-			"slots": [
-				{ "id":"uav", "label": "Drone", "type": ["UAV_1", "UAV_2"], "required": true, "placeholder": "Scegli il drone" }
-			]
-		},
-		"UAV_1": {
-			"slots": [
-				{ "id":"b1", "label": "Batteria 1", "type": ["Battery1", "Battery2"], "required": true, "placeholder": "Scegli la batteria" },
-				{ "id":"b2", "label": "Batteria 2", "type": ["Battery1", "Battery2"], "required": true, "placeholder": "Scegli la batteria" },
-				{ "id":"rc", "label": "Telecomando", "type": "Remote1", "required": true, "placeholder": "Scegli il telecomando" },
-				{ "id":"cam", "label": "Fotocamera", "type": ["Cam","FLIR"], "required": false, "placeholder": "Scegli la fotocamera" }
-			]
-		}
-	}
+  "pilots": [
+    {
+      "id": "{1234-5678-9abc-def0}",
+      "name": "Pilota Uno",
+      "user_code": "Pilot_001",
+      "operator_code": "Op001",
+      "EASA_code": "EASA_1"
+    },
+    {
+      "id": "{1234-5678-9abc-de10}",
+      "name": "Pilota Due",
+      "user_code": "Pilot_002",
+      "operator_code": "Op002",
+      "EASA_code": "EASA_2"
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "title": "Test 1",
+      "dt": "2021-06-01T09:24:52.328Z",
+      "municipality_code": "031023",
+      "locality": "",
+      "alt": "5",
+      "lat": 45.805782900000004,
+      "lon": 13.510524,
+      "flight_max_height": 100,
+      "category": 1,
+      "scenary": 1,
+      "flight_type": 1,
+      "type": 2
+    },
+    {
+      "id": 2,
+      "title": "Attività 2",
+      "dt": "2021-06-01T10:59:00.381Z",
+      "municipality_code": "030003",
+      "locality": "",
+      "alt": 0,
+      "lat": 0,
+      "lon": 0,
+      "flight_max_height": "105",
+      "category": 2,
+      "scenary": 2,
+      "flight_type": 2,
+      "type": 1
+    }
+  ],
+  "uas": [
+    {
+      "id": "{1111}",
+      "nick": "Caccia 1",
+      "model": "MavcPRO",
+      "producer": "Producer 1",
+      "serail_number": "aabbccddeeff",
+      "mod_max": "10",
+      "plate": "TS123Z",
+      "authorized_for": [
+        "IT-STS-01",
+        "IT-STS-02"
+      ]
+    }
+  ],
+  "equipments": [
+    {
+      "name": "UAV 1",
+      "type": "UAV_1",
+      "id": "{1111}",
+      "descriptor": "UAV_1",
+      "slot": null,
+      "parent": null
+    },
+    {
+      "name": "UAV 2",
+      "type": "UAV_2",
+      "id": "{2222}",
+      "descriptor": "UAV_2",
+      "slot": null,
+      "parent": null
+    },
+    {
+      "name": "Batteria 1",
+      "type": "Battery1",
+      "id": "{BBBB.1111}",
+      "slot": null,
+      "parent": null
+    },
+    {
+      "name": "Batteria 2",
+      "type": "Battery1",
+      "id": "{BBBB.1112}",
+      "slot": null,
+      "parent": null
+    },
+    {
+      "name": "Batteria X1",
+      "type": "Battery2",
+      "id": "{BBXX.1111}",
+      "slot": null,
+      "parent": null
+    },
+    {
+      "name": "Batteria X2",
+      "type": "Battery2",
+      "id": "{BBXX.1112}",
+      "slot": null,
+      "parent": null
+    },
+    {
+      "name": "Telecomando M5",
+      "type": "Remote1",
+      "id": "RC_1",
+      "slot": null,
+      "parent": null
+    },
+    {
+      "name": "FLIR",
+      "type": "FLIR",
+      "id": "FLIR_A",
+      "slot": null,
+      "parent": null
+    },
+    {
+      "name": "WebCam",
+      "type": "Cam",
+      "id": "Webcam_HD_1",
+      "slot": null,
+      "parent": null
+    }
+  ],
+  "templates": {
+    "UAV": {
+      "slots": [
+        {
+          "id": "uav",
+          "label": "Drone",
+          "type": [
+            "UAV_1",
+            "UAV_2"
+          ],
+          "required": true,
+          "placeholder": "Scegli il drone"
+        }
+      ]
+    },
+    "UAV_1": {
+      "slots": [
+        {
+          "id": "b1",
+          "label": "Batteria 1",
+          "type": [
+            "Battery1",
+            "Battery2"
+          ],
+          "required": true,
+          "placeholder": "Scegli la batteria"
+        },
+        {
+          "id": "b2",
+          "label": "Batteria 2",
+          "type": [
+            "Battery1",
+            "Battery2"
+          ],
+          "required": true,
+          "placeholder": "Scegli la batteria"
+        },
+        {
+          "id": "rc",
+          "label": "Telecomando",
+          "type": "Remote1",
+          "required": true,
+          "placeholder": "Scegli il telecomando"
+        },
+        {
+          "id": "cam",
+          "label": "Fotocamera",
+          "type": [
+            "Cam",
+            "FLIR"
+          ],
+          "required": false,
+          "placeholder": "Scegli la fotocamera"
+        }
+      ]
+    }
+  }
 }

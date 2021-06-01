@@ -1,7 +1,7 @@
 <template>
 	<div class="app-header">
 		<div class="brand">
-			<router-link to="home">SAPR</router-link>
+			<router-link to="/home">SAPR</router-link>
 		</div>
 	</div>
 </template>
