@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div>
 		<ModalItemChooser ref="theDialog" />
 		
 		<equipment-slot :descriptor="descriptor" id="root" />
@@ -17,6 +17,9 @@ import ModalItemChooser from '@/components/ModalItemChooser.vue'
 export default {
 	components: {
 		EquipmentSlot, ModalItemChooser
+	},
+	props: {
+		configuration: { type: Object, default: () => null }
 	},
 	data() {
 		return {

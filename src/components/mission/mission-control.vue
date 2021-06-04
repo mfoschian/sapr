@@ -1,8 +1,8 @@
 <template>
 	<div class="mission">
 		<div>
-			<b-button v-if="!mission.configuration" variant="danger">Configura</b-button>
-			<b-button v-else variant="info" @click="goto_configuration">Configurazione</b-button>
+			<b-button v-if="!mission.configuration" variant="danger" @click="goto_configuration">Configura</b-button>
+			<b-button v-else variant="info">Configurazione</b-button>
 		</div>
 		<div>
 			<div v-if="mission.dt_start">Decollo: {{ mission.dt_start | dtm }}</div>
@@ -25,7 +25,13 @@ export default {
 	},
 	methods: {
 		goto_configuration() {
-
+			this.$router.push( {
+				name:'configure-mission',
+				params: {
+					activity_id: this.mission.activity_id,
+					mission_id: this.mission.id
+				}
+			});
 		},
 		async take_off() {
 			await this.mission.take_off();

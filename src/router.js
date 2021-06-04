@@ -9,11 +9,22 @@ import ActivityEditor from '@/pages/activities/activity-edit'
 
 import MissionsListPage from '@/pages/missions/missions-list'
 import MissionNewPage from '@/pages/missions/mission-new'
+import MissionConfigurePage from '@/pages/missions/mission-configure'
+import MissionControlPage from '@/pages/missions/mission-control'
 
 import { Activity } from '@/models/Activity'
+import { Mission } from './models/Mission'
 
 Vue.use(Router)
 
+let data_loaded = false;
+async function ensure_data_is_loaded() {
+	if( data_loaded )
+		return;
+
+	await Activity.read_all();
+	data_loaded = true;
+}
 
 let R = new Router({
 	routes: [
@@ -21,7 +32,26 @@ let R = new Router({
 			path: '/',
 			name: 'home',
 			component: Home,
-			meta: { requiresAuth: false }
+			meta: { requiresAuth: false },
+			beforeEnter: async (to,from,next) => {
+				// debugger; // eslint-disable-line
+				await ensure_data_is_loaded();
+
+				// All'avvio dell'applicazione devo vedere se c'è già qualche missione in corso
+				// In quel caso devo aprire la pagina della missione in modo da farla completare
+				console.log( 'Starting home page'); // eslint-disable-line
+				let mission = Mission.first_active() || Mission.first_idle();
+				if( mission != null ) {
+					let aid = mission.activity_id;
+					let mid = mission.id;
+					console.log( 'Activity %s has a mission %s running or idle: go to mission page', aid, mid); // eslint-disable-line
+					next({name: 'mission-control', params: { activity_id: aid, mission_id: mid }});
+					return;
+				}
+
+				console.log( 'Going to home page'); // eslint-disable-line
+				next();
+			}			
 		},
 		{
 			path: '/errors/:err_type',
@@ -89,6 +119,20 @@ let R = new Router({
 			path: '/activities/:activity_id/missions/new',
 			name: 'new-mission',
 			component: MissionNewPage,
+			meta: { requiresAuth: false },
+			props: true,
+		},
+		{
+			path: '/activities/:activity_id/missions/:mission_id',
+			name: 'control-mission',
+			component: MissionControlPage,
+			meta: { requiresAuth: false },
+			props: true,
+		},
+		{
+			path: '/activities/:activity_id/missions/:mission_id/configure',
+			name: 'configure-mission',
+			component: MissionConfigurePage,
 			meta: { requiresAuth: false },
 			props: true,
 		},

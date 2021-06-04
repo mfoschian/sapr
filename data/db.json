@@ -34,23 +34,10 @@
   ],
   "missions": [
     {
-      "id": "d9638faa-68f7-4394-b838-57d619a0d3f9",
+      "id": "69481628-bab8-4ea1-8b7e-413371306120",
       "activity_id": "c845dd7c-736c-4656-a414-bf67631968c7",
-      "dt_start": "2021-06-04T13:13:16.808Z",
-      "dt_end": "2021-06-04T14:56:45.324Z",
-      "configuration": {}
-    },
-    {
-      "id": "4e5ca70d-2f73-4758-b3cf-a9c4c7edd029",
-      "activity_id": "c845dd7c-736c-4656-a414-bf67631968c7",
-      "dt_start": "2021-06-04T13:53:44.562Z",
-      "dt_end": "2021-06-04T14:56:49.365Z",
-      "configuration": {}
-    },
-    {
-      "id": "b86bc5f4-799b-4781-a617-bd5cdc1bb840",
-      "activity_id": "c845dd7c-736c-4656-a414-bf67631968c7",
-      "dt_start": "2021-06-04T14:10:17.403Z",
+      "dt_start": null,
+      "dt_end": null,
       "configuration": null
     }
   ],

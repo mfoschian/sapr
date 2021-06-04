@@ -1,13 +1,14 @@
 import store from '@/store';
 
+
 export class Mission {
 
 	constructor(options) {
 		let m = options || {};
 		this.id = m.id || null;
 		this.activity_id = m.activity_id;
-		this.dt_start = m.dt_start || new Date();
-		this.dt_end = m.dt_end;
+		this.dt_start = m.dt_start || null;
+		this.dt_end = m.dt_end || null;
 		this.configuration = m.configuration || null;
 	}
 
@@ -22,12 +23,18 @@ export class Mission {
 			id: this.id,
 			activity_id: this.activity_id,
 			status: this.status,
-			dt_start: this.dt_start,
-			dt_end: this.dt_end,
+			dt_start: this.dt_start || null,
+			dt_end: this.dt_end || null,
 			configuration: this.configuration
 		});
 	}
 
+	static get( id ) {
+		let m = store.state.missions.find( m => m.id == id );
+		if( !m )
+			return null;
+		return new Mission(m);
+	}
 	// static async read( activity_id ) {
 	// 	await store.dispatch('loadMissions');
 	// 	return store.state.missions.filter( m => m.activity_id == activity_id );
@@ -42,7 +49,24 @@ export class Mission {
 		this.dt_start = new Date();
 		return this.save();
 	}
+
+	static first_active() {
+		// debugger; // eslint-disable-line
+		
+		let item = store.state.missions.find( m => {
+			return (m.configuration != null && m.dt_start != null && m.dt_end == null) 
+		});
+		if( !item )
+			return null;
+		else
+			return new Mission( item );
+	}
+
+	static first_idle() {
+		let item = store.state.missions.find( m => (m.configuration != null && m.dt_start == null) );
+		if( !item )
+			return null;
+		else
+			return new Mission( item );
+	}
 }
-
-
-
