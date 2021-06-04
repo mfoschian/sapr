@@ -7,11 +7,13 @@ import ActivityList from '@/pages/activities/activities-list'
 import ActivityNew from '@/pages/activities/activity-new'
 import ActivityEditor from '@/pages/activities/activity-edit'
 
-import MissionsPage from '@/pages/missions/missions-list'
+import MissionsListPage from '@/pages/missions/missions-list'
+import MissionNewPage from '@/pages/missions/mission-new'
 
 import { Activity } from '@/models/Activity'
 
 Vue.use(Router)
+
 
 let R = new Router({
 	routes: [
@@ -44,8 +46,7 @@ let R = new Router({
 			component: ActivityList,
 			props: true,
 			beforeEnter: async (to,from,next) => {
-				let activities = await Activity.read_all();
-				to.params.activities = activities;
+				to.params.activities = await Activity.read_all();
 				next();
 			},
 			meta: { requiresAuth: false }
@@ -78,26 +79,18 @@ let R = new Router({
 			}
 		},
 		{
-			path: '/activities/:id/missions',
+			path: '/activities/:activity_id/missions',
 			name: 'activity-missions',
-			component: MissionsPage,
+			component: MissionsListPage,
 			meta: { requiresAuth: false },
 			props: true,
-			/*
-			beforeEnter: (to,from,next) => {
-				// debugger; // eslint-disable-line
-				console.log( 'About to editing activity %s', to.params.id); // eslint-disable-line
-				let activity = Activity.get(to.params.id)
-				if( activity == null ) {
-					console.log( 'Activity %s not found: route to error page', to.params.id); // eslint-disable-line
-					next('/errors/activity_not_found');
-				}
-				else {
-					console.log( 'Going to %s', activity.title || '?'); // eslint-disable-line
-					to.params.activity = activity;
-					next();
-				}
-			}*/
+		},
+		{
+			path: '/activities/:activity_id/missions/new',
+			name: 'new-mission',
+			component: MissionNewPage,
+			meta: { requiresAuth: false },
+			props: true,
 		},
 		{
 			path: "*", redirect: { name: 'home' }

@@ -11,6 +11,7 @@ Vue.use(Vuex)
 let _store = new Vuex.Store({
 	state: {
 		activities: [],
+		missions: [],
 		equipments: [],
 		slot_templates: {},
 		on_line: true
@@ -22,9 +23,17 @@ let _store = new Vuex.Store({
 		setActivities( state, data ) { state.activities = data;	},
 		addActivity( state, data ) { state.activities.push( data );	},
 		updateActivity( state, data ) {
-			let ix = state.activities.findIndex( a => a.id = data.id );
+			let ix = state.activities.findIndex( a => a.id == data.id );
 			if( ix < 0 ) throw new Error( 'Activity not found' );
 			state.activities.splice( ix, 1, data );
+		},
+
+		setMissions( state, data ) { state.missions = data;	},
+		addMission( state, data ) { state.missions.push( data );	},
+		updateMission( state, data ) {
+			let ix = state.missions.findIndex( a => a.id == data.id );
+			if( ix < 0 ) throw new Error( 'Mission not found' );
+			state.missions.splice( ix, 1, data );
 		},
 
 		setEquipments( state, data ) { state.equipments = data;	},
@@ -53,14 +62,37 @@ let _store = new Vuex.Store({
 				console.error( err ); // eslint-disable-line
 			}
 		},
-		async saveActivity( {commit}, act ) {
+		async saveActivity( {commit}, item ) {
 			try {
-				let is_new = act.id == null;
-				let data = await API.save_activity( act );
+				let is_new = item.id == null;
+				let data = await API.save_activity( item );
 				if( is_new )
 					commit( 'addActivity', data );
 				else
 					commit( 'updateActivity', data );
+			}
+			catch( err ) {
+				console.error( err ); // eslint-disable-line
+			}
+		},
+		
+		async loadMissions( {commit} ) {
+			try {
+				let data = await API.get_missions();
+				commit( 'setMissions', data );
+			}
+			catch( err ) {
+				console.error( err ); // eslint-disable-line
+			}
+		},
+		async saveMission( {commit}, item ) {
+			try {
+				let is_new = item.id == null;
+				let data = await API.save_mission( item );
+				if( is_new )
+					commit( 'addMission', data );
+				else
+					commit( 'updateMission', data );
 			}
 			catch( err ) {
 				console.error( err ); // eslint-disable-line

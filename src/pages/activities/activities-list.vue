@@ -1,5 +1,6 @@
 <template>
 	<BasePage :title="title">
+		<b-button to="/activities/new" size="sm">Nuova</b-button>
 		<ActivityViewer v-for="a in activities_to_show" :key="a.id"
 			class="list-item"
 			:activity="a"

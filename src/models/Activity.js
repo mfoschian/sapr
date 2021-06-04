@@ -1,3 +1,6 @@
+import store from '@/store';
+import { Mission } from './Mission';
+
 export const ActivityCategories = [ // Scenari attività
 	{ id: 0, label: 'Non specificata'},
 	{ id: 1, label: 'Open'},
@@ -33,8 +36,6 @@ export const ActivityTypes = [ // Finalità intervento
 	{ id: 7, label: 'Attività di Polizia Giudiziaria'},
 ];
 
-import store from '@/store';
-
 export class Activity {
 	
 	constructor( data ) {
@@ -56,6 +57,7 @@ export class Activity {
 	}
 
 	save() {
+		// debugger; // eslint-disable-line
 		store.dispatch('saveActivity', {
 			id: this.id,
 			title: this.title,
@@ -73,17 +75,36 @@ export class Activity {
 		});
 	}
 
+	missions() {
+		return store.state.missions.filter( m => m.activity_id == this.id )
+		.map( m => new Mission(m) );
+	}
 
-}
+	active_missions() {
+		return this.missions.filter( m => m.is_active() );
+	}
 
-Activity.read_all = async function() {
-	// debugger; // eslint-disable-line
-	await store.dispatch('loadActivities');
-	return store.state.activities;
-}
+	async add_mission( m ) {
+		if( !m )
+			return Promise.reject('No mission to add to activity '+this.id);
 
-Activity.get = function( id ) {
-	// debugger; // eslint-disable-line
-	let a = store.state.activities.find( it => it.id == id ) || null;
-	return a;
+		m.activity_id = this.id;
+		return m.save();
+	}
+
+
+
+
+	static async read_all() {
+		// debugger; // eslint-disable-line
+		await store.dispatch('loadActivities');
+		await store.dispatch('loadMissions');
+		return store.state.activities.map( a => new Activity(a) );
+	}
+	
+	static get( id ) {
+		// debugger; // eslint-disable-line
+		let a = store.state.activities.find( it => it.id == id ) || null;
+		return new Activity(a);
+	}	
 }

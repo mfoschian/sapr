@@ -17,64 +17,41 @@
   ],
   "activities": [
     {
-      "id": 1,
-      "title": "Test 1",
-      "dt": "2021-06-01T09:24:52.328Z",
-      "municipality_code": "031023",
-      "locality": "",
-      "alt": "5",
-      "lat": 45.805782900000004,
-      "lon": 13.510524,
-      "flight_max_height": 100,
-      "category": 1,
-      "scenary": 1,
-      "flight_type": 1,
-      "type": 2
-    },
-    {
-      "id": 2,
-      "title": "Attività 2",
-      "dt": "2021-06-01T10:59:00.381Z",
+      "id": "c845dd7c-736c-4656-a414-bf67631968c7",
+      "title": "rrr",
+      "dt": "2021-06-04T08:24:56.331Z",
       "municipality_code": "030003",
       "locality": "",
       "alt": 0,
       "lat": 0,
       "lon": 0,
-      "flight_max_height": "105",
-      "category": 2,
-      "scenary": 2,
-      "flight_type": 2,
-      "type": 1
-    },
-    {
-      "id": 3,
-      "title": "Altra Attività",
-      "dt": "2021-06-01T13:57:19.372Z",
-      "municipality_code": "030015",
-      "locality": "",
-      "alt": "89",
-      "lat": 46.0607063,
-      "lon": 13.2697371,
       "flight_max_height": 100,
-      "category": 3,
-      "scenary": 2,
-      "flight_type": 4,
-      "type": 3
+      "category": 2,
+      "scenary": 1,
+      "flight_type": 1,
+      "type": 7
+    }
+  ],
+  "missions": [
+    {
+      "id": "d9638faa-68f7-4394-b838-57d619a0d3f9",
+      "activity_id": "c845dd7c-736c-4656-a414-bf67631968c7",
+      "dt_start": "2021-06-04T13:13:16.808Z",
+      "dt_end": "2021-06-04T14:56:45.324Z",
+      "configuration": {}
     },
     {
-      "id": 4,
-      "title": "Quarto volo",
-      "dt": "2021-06-01T15:01:00.000Z",
-      "municipality_code": "030052",
-      "locality": "",
-      "alt": 0,
-      "lat": 0,
-      "lon": 0,
-      "flight_max_height": "50",
-      "category": 4,
-      "scenary": 1,
-      "flight_type": 2,
-      "type": 5
+      "id": "4e5ca70d-2f73-4758-b3cf-a9c4c7edd029",
+      "activity_id": "c845dd7c-736c-4656-a414-bf67631968c7",
+      "dt_start": "2021-06-04T13:53:44.562Z",
+      "dt_end": "2021-06-04T14:56:49.365Z",
+      "configuration": {}
+    },
+    {
+      "id": "b86bc5f4-799b-4781-a617-bd5cdc1bb840",
+      "activity_id": "c845dd7c-736c-4656-a414-bf67631968c7",
+      "dt_start": "2021-06-04T14:10:17.403Z",
+      "configuration": null
     }
   ],
   "uas": [

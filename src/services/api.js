@@ -1,12 +1,42 @@
-
 import axios from 'axios';
+
+import { new_id } from '@/utilities/new_id.js'
 
 const SERVER_URL = 'http://localhost:3000';
 
+
+function adjust_date( dt ) {
+	if( typeof( dt ) == 'string' )
+		return new Date( dt );
+	else
+		return dt;
+}
+
 function adjust_activity( a ) {
-	a.id = String(a.id);
-	if( typeof(a.dt) == 'string' )
-		a.dt = new Date( a.dt );
+	a.dt = adjust_date( a.dt );
+	return a;
+}
+
+function adjust_mission( m ) {
+	m.dt_start = adjust_date( m.dt_start );
+	m.dt_end = adjust_date( m.dt_end );
+	return m;
+}
+
+
+function upsert( url, item ) {
+	if( item == null ) return {};
+	if( item.id == null ) {
+		item.id = new_id();
+		return axios.post( url, item ).then( (result) => {
+			return result.data;
+		})
+	}
+	else {
+		return axios.put( url + '/' + item.id, item ).then( (result) => {
+			return result.data;
+		})
+	}
 }
 
 let API = {
@@ -19,18 +49,21 @@ let API = {
 		})
 	},
 
-	save_activity: async function( act ) {
-		if( act == null ) return {};
-		if( act.id == null ) {
-			return axios.post(SERVER_URL + '/activities', act ).then( (result) => {
-				return result.data;
-			})
-		}
-		else {
-			return axios.put(SERVER_URL + '/activities/'+act.id, act ).then( (result) => {
-				return result.data;
-			})
-		}
+	save_activity: async function( item ) {
+		return upsert( SERVER_URL + '/activities' , item ).then( (res) => adjust_activity(res) );
+	},
+
+
+	get_missions: async function() {
+		return axios.get(SERVER_URL + '/missions').then( (result) => {
+			let res = result.data;
+			res.forEach( adjust_mission );
+			return res;
+		})
+	},
+
+	save_mission: async function( item ) {
+		return upsert( SERVER_URL + '/missions' , item ).then( (res) => adjust_mission(res) );
 	},
 
 	get_equipments: async function() {
