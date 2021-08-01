@@ -19,6 +19,7 @@ export default {
 		EquipmentSlot, ModalItemChooser
 	},
 	props: {
+		template: { type: String, default: 'UAV' },
 		configuration: { type: Object, default: () => null }
 	},
 	data() {
@@ -57,7 +58,7 @@ export default {
 			await SlotTemplate.read_all();
 
 			// debugger; // eslint-disable-line
-			let st = SlotTemplate.find_by_id('UAV');
+			let st = SlotTemplate.find_by_id(this.template);
 			console.log( st ); // eslint-disable-line
 			if( !st || !st.slots ) {
 				console.error('Cannot find UAV template'); // eslint-disable-line

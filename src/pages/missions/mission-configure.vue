@@ -1,7 +1,7 @@
 <template>
 	<BasePage :title="'Configuring mission ' + mission_id + ' of activity ' + activity_id" >
 		<ConfigSection title="Configurazione Drone" >
-			<UASConfiguration />
+			<UASConfiguration :configuration="configuration" />
 		</ConfigSection>
 		<ConfigSection title="Numero satelliti agganciati" >
 			<SatelliteDataForm />
