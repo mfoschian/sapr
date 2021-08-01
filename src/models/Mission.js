@@ -10,6 +10,9 @@ export class Mission {
 		this.dt_start = m.dt_start || null;
 		this.dt_end = m.dt_end || null;
 		this.configuration = m.configuration || null;
+		// this.type_id = id dell'unico MissionType che servirebbe (UAS)
+		// this.root_equip_type_id = id dell'equipment type legato al mission type UAS ... per il momento cablato
+
 	}
 
 	is_configured() { return this.configuration != null; }

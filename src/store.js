@@ -14,6 +14,8 @@ let _store = new Vuex.Store({
 		missions: [],
 		equipments: [],
 		slot_templates: {},
+		equipment_types: [],
+		configurations: [],
 		on_line: true
 	},
 	getters: {
@@ -34,6 +36,31 @@ let _store = new Vuex.Store({
 			let ix = state.missions.findIndex( a => a.id == data.id );
 			if( ix < 0 ) throw new Error( 'Mission not found' );
 			state.missions.splice( ix, 1, data );
+		},
+
+		setConfigurations( state, data ) { state.configurations = data;	},
+		addConfiguration( state, data ) { state.configurations.push( data );	},
+		updateConfiguration( state, data ) {
+			let ix = state.configurations.findIndex( a => a.id == data.id );
+			if( ix < 0 ) throw new Error( 'Configuration not found' );
+			state.configurations.splice( ix, 1, data );
+		},
+		upsertConfigAssignment( state, data ) {
+			let c = state.configurations.find( a => a.id == data.cfg_id );
+			if( !c ) throw new Error( 'Configuration not found' );
+			let assignments = c.assignments;
+			let a = { 
+				slot_id: data.slot_id,
+				equip_id: data.equip_id,
+				child_cfg_id: data.child_cfg_id
+			};
+			let ix = assignments.findIndex( a => a.slot_id = data.slot_id )
+			if( ix < 0 ) {
+				assignments.push( a );
+			}
+			else {
+				assignments.splice( ix, 1, a );
+			}
 		},
 
 		setEquipments( state, data ) { state.equipments = data;	},
@@ -123,6 +150,38 @@ let _store = new Vuex.Store({
 		},
 		freeEquipment( {commit}, data ) {
 			commit( 'removeEquipmentAssignment', data );
+		},
+
+
+		async loadConfigurations( {commit} ) {
+			try {
+				let data = await API.get_configurations();
+				commit( 'setConfigurations', data );
+			}
+			catch( err ) {
+				console.error( err ); // eslint-disable-line
+			}
+		},
+		async saveConfiguration( {commit}, item ) {
+			try {
+				let is_new = item.id == null;
+				let data = await API.save_configuration( item );
+				if( is_new )
+					commit( 'addConfiguration', data );
+				else
+					commit( 'updateConfiguration', data );
+			}
+			catch( err ) {
+				console.error( err ); // eslint-disable-line
+			}
+		},		
+		async upsertConfigAssignment( {commit}, data )	{
+			try {
+				commit('upsertConfigAssignment', data );
+			}
+			catch( err ) {
+				console.error( err ); // eslint-disable-line
+			}
 		}
 	}
 });

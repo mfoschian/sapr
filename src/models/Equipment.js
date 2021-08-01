@@ -1,5 +1,9 @@
 import store from '@/store.js'
 
+// Equipment
+//   "equipments": [ { id, name, type_id, serial_num, used } ]
+
+
 function Equipment() {
 
 }
@@ -20,7 +24,7 @@ Equipment.get_childs_of = function(item_id) {
 
 Equipment.available_items_of_type = function( types ) {
 	let _types = Array.isArray( types ) ? types : [ types ];
-	return store.state.equipments.filter( x => _types.indexOf( x.type ) >= 0 && x.slot == null );
+	return store.state.equipments.filter( x => _types.indexOf( x.type ) >= 0 && x.used == false );
 }
 
 Equipment.assign = function(item_id, slot_id, parent_id) {

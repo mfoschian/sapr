@@ -30,12 +30,34 @@
       "scenary": 1,
       "flight_type": 1,
       "type": 7
+    },
+    {
+      "id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
+      "title": "test",
+      "dt": "2021-07-31T14:49:00.627Z",
+      "municipality_code": "031023",
+      "locality": "",
+      "alt": 0,
+      "lat": 0,
+      "lon": 0,
+      "flight_max_height": 100,
+      "category": 2,
+      "scenary": 1,
+      "flight_type": 2,
+      "type": 7
     }
   ],
   "missions": [
     {
       "id": "69481628-bab8-4ea1-8b7e-413371306120",
       "activity_id": "c845dd7c-736c-4656-a414-bf67631968c7",
+      "dt_start": null,
+      "dt_end": null,
+      "configuration": null
+    },
+    {
+      "id": "22a5628e-cdd0-4384-a83a-a005713f1be1",
+      "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
       "dt_start": null,
       "dt_end": null,
       "configuration": null
