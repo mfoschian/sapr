@@ -11,5 +11,9 @@ export class EquipmentType {
 		return item;
 	}
 
+	static read_all = async function() {
+		return store.dispatch('loadEquipmentTypes').then( () => store.state.slot_templates );
+	}
+	
 }
 

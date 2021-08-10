@@ -1,9 +1,9 @@
 <template>
 	<b-container fluid class="slot_list">
-		<b-row v-if="descriptor != null">
-			<b-col cols="2" class="slot-label">{{ descriptor.label }}</b-col>
+		<b-row v-if="assignments.lenght > 0">
+			<b-col cols="2" class="slot-label">{{ label }}</b-col>
 			<b-col cols="10" class="slot-content" >
-				<div @click.stop="choose_item" class="clickable">{{ loc_item ? loc_item.name : descriptor.placeholder }}</div>
+				<div @click.stop="choose_item" class="clickable">{{ loc_item ? loc_item.name : placeholder }}</div>
 				<div class="slot-sub-content" v-for="s in item_slots" :key="s.id">
 					<equipment-slot :descriptor="s.descriptor" :id="s.id" :item="s.item" :parent_item_id="s.parent_item_id" />
 				</div>
@@ -18,12 +18,17 @@
 
 <script>
 import Equipment from '@/models/Equipment'
-import SlotTemplate from '@/models/SlotTemplate'
+import EquipmentType from '@/models/EquipmentType'
 
 export default {
 	name: 'EquipmentSlot',
 	inject: ['choose_item_for'],
 	props: {
+		equip_type_id: { type: String, default: null },
+		assignments: { type: Array, default: () => [] },
+		label: { type: String, default: "" },
+		placeholder: { type: String, default: "" },
+
 		descriptor: { type: Object, default: () => null },
 		item: { type: Object, default: () => null },
 		id: { type: String, default: () => null },

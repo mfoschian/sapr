@@ -9,7 +9,7 @@
 <script>
 // import Vue from 'vue'
 import Equipment from '@/models/Equipment'
-import SlotTemplate from '@/models/SlotTemplate'
+import EquipmentType from '@/models/EquipmentType'
 
 import EquipmentSlot from '@/components/EquipmentSlot.vue'
 import ModalItemChooser from '@/components/ModalItemChooser.vue'
@@ -55,10 +55,10 @@ export default {
 		// debugger; // eslint-disable-line
 		try {
 			await Equipment.read_all();
-			await SlotTemplate.read_all();
+			await EquipmentType.read_all();
 
 			// debugger; // eslint-disable-line
-			let st = SlotTemplate.find_by_id(this.template);
+			let st = EquipmentType.get(this.template);
 			console.log( st ); // eslint-disable-line
 			if( !st || !st.slots ) {
 				console.error('Cannot find UAV template'); // eslint-disable-line
