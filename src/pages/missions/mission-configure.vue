@@ -1,13 +1,13 @@
 <template>
 	<BasePage :title="'Configuring mission ' + mission_id + ' of activity ' + activity_id" >
 		<ConfigSection title="Configurazione Drone" >
-			<UASConfiguration :value="uav_info" @input="l_uav_info=$event;save_config()"/>
+			<UASConfiguration :value="uav_info" @input="l_uav_info=$event;save_config()" :read_only="read_only" />
 		</ConfigSection>
 		<ConfigSection title="Numero satelliti agganciati" >
-			<SatelliteDataForm :value="sat_info" @input="l_sat_info=$event;save_config()" />
+			<SatelliteDataForm :value="sat_info" @input="l_sat_info=$event;save_config()" :read_only="read_only" />
 		</ConfigSection>
 		<ConfigSection title="Condizioni meteo-ambientali locali" >
-			<MeteoDataForm :value="meteo_info" @input="l_meteo_info=$event;save_config()"/>
+			<MeteoDataForm :value="meteo_info" @input="l_meteo_info=$event;save_config()" :read_only="read_only" />
 		</ConfigSection>
 		<!-- <b-button variant="danger" @click="save_config">Save</b-button> -->
 		<b-button variant="primary" @click="$router.go(-1)">OK</b-button>
@@ -44,6 +44,10 @@ export default {
 	computed: {
 		mission() {
 			return Mission.get( this.mission_id );
+		},
+		read_only() {
+			if(!this.mission) return false;
+			return this.mission.dt_start != null && this.mission.dt_end != null;
 		},
 		uav_info() {
 			if( this.l_uav_info ) return this.l_uav_info;

@@ -12,6 +12,7 @@
 				align="left"
 				min="0"
 				@change="update"
+				:readonly="read_only"
 			></b-form-input>
 		</b-form-group>
 
@@ -28,6 +29,7 @@
 				align="left"
 				min="0"
 				@change="update"
+				:readonly="read_only"
 			></b-form-input>
 		</b-form-group>
 	</b-form>
@@ -36,7 +38,8 @@
 <script>
 export default {
 	props: {
-		value: { type: Object, default: () => ({sat_rc:0, sat:0}) }
+		value: { type: Object, default: () => ({sat_rc:0, sat:0}) },
+		read_only: { type: Boolean, default: false }
 	},
 	data() {
 		return {

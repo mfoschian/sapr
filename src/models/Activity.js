@@ -81,7 +81,21 @@ export class Activity {
 	}
 
 	active_missions() {
-		return this.missions.filter( m => m.is_active() );
+		return this.missions().filter( m => m.is_active() );
+	}
+
+	last_mission() {
+		let landed_missions = this.missions().filter( m => m.dt_end != null );
+		if( landed_missions.length == 0 ) return null;
+
+		let res = landed_missions[0];
+		for( let i=1; i<landed_missions.length; i++ ) {
+			let m = landed_missions[i];
+			if( m.dt_end > res.dt_end )
+				res = m;
+		}
+
+		return res;
 	}
 
 	async add_mission( m ) {

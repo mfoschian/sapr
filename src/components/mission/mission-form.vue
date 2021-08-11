@@ -77,9 +77,12 @@ export default {
 
 		async save_record() {
 			let a = new Mission({
-				dt_start: this.dt_takeoff_start,
-				dt_end: this.dendeoff_start,
-				activity_id: this.mission.activity_id || this.activity_id
+				dt_start: this.dt_takeoff,
+				dt_end: this.dt_landing,
+				activity_id: this.mission.activity_id || this.activity_id,
+				uav_setup: this.mission.uav_setup,
+				meteo_info: this.mission.meteo_info,
+				sat_info: this.mission.sat_info
 			});
 
 			console.log( a ); // eslint-disable-line

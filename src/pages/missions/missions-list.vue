@@ -7,7 +7,7 @@
 			<b-button size="sm" @click="add_mission" title="Aggiungi missione"><b-icon-plus /></b-button>
 			<div>
 				<MissionControl v-for="mission in missions_ordered" :key="mission.id" 
-					:v-model="mission"
+					:mission="mission"
 				/>
 			</div>
 		</section>

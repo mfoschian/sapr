@@ -12,6 +12,7 @@
 				stacked
 				align="left"
 				@change="update"
+				:disabled="read_only"
 			></b-form-select>		
 		</b-form-group>
 
@@ -27,6 +28,7 @@
 				stacked
 				align="left"
 				@change="update"
+				:disabled="read_only"
 			></b-form-select>		
 		</b-form-group>
 		
@@ -42,6 +44,7 @@
 				stacked
 				align="left"
 				@change="update"
+				:disabled="read_only"
 			></b-form-select>		
 		</b-form-group>
 				
@@ -57,6 +60,7 @@
 				stacked
 				align="left"
 				@change="update"
+				:disabled="read_only"
 			></b-form-select>		
 		</b-form-group>
 		
@@ -72,6 +76,7 @@
 					v-model.number="wind_intensity"
 					align="left"
 					@change="update"
+					:readonly="read_only"
 				></b-form-input>
 			</b-input-group>
 		</b-form-group>
@@ -88,6 +93,7 @@
 					v-model.number="temperature"
 					align="left"
 					@change="update"
+					:readonly="read_only"
 				></b-form-input>
 			</b-input-group>
 		</b-form-group>
@@ -105,6 +111,7 @@
 					v-model.number="humidity"
 					align="left"
 					@change="update"
+					:readonly="read_only"
 				></b-form-input>
 			</b-input-group>
 		</b-form-group>
@@ -122,6 +129,7 @@
 					v-model.number="pression"
 					align="left"
 					@change="update"
+					:readonly="read_only"
 				></b-form-input>
 			</b-input-group>
 		</b-form-group>
@@ -145,7 +153,8 @@ const default_config = {
 
 export default {
 	props: {
-		value: { type: Object, default: () => default_config }
+		value: { type: Object, default: () => default_config },
+		read_only: { type: Boolean, default: false }
 	},
 	data() {
 		// debugger; // eslint-disable-line
@@ -183,6 +192,8 @@ export default {
 	},
 	methods: {
 		update() {
+			if( this.read_only ) return;
+
 			this.$emit('input', {
 				clouds_coverage: this.clouds_coverage,
 				clouds_height: this.clouds_height,

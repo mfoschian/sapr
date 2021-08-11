@@ -2,7 +2,7 @@
 	<b-container fluid class="slot_list">
 		<b-row>
 			<b-col cols="2" class="slot-label">{{ label }}</b-col>
-			<b-col :cols="empty ? 10 : 9" class="slot-content">
+			<b-col :cols="empty || read_only ? 10 : 9" class="slot-content">
 				<div @click.stop="choose_item" class="clickable equip_name">{{ equipment_name }}</div>
 				<div class="slot-sub-content" v-for="child in child_slots" :key="child.id">
 					<equipment-slot
@@ -11,10 +11,11 @@
 						:accepts="child.accepts"
 						:assignment="child.assignment"
 						@changed="child_changed($event,child.id)"
+						:read_only="read_only"
 					/>
 				</div>
 			</b-col>
-			<b-col v-if="!empty" cols="1">
+			<b-col v-if="!empty && !read_only" cols="1">
 				<b-button size="sm" @click="remove_item"><b-icon-trash-fill /></b-button>
 			</b-col>
 		</b-row>
@@ -34,6 +35,7 @@ export default {
 		accepts: { type: Array, default: () => [] }, // [ equip_type_id, ... ]
 		required: { type: Boolean, default: false },
 		assignment: { type: Object, default: null }, // { equip_id, children {slot_id: assignment } }
+		read_only: { type: Boolean, deafult: false }
 	},
 	data() {
 		return {
@@ -85,6 +87,8 @@ export default {
 			}
 		},
 		async choose_item() {
+			if( this.read_only ) return;
+
 			// console.log( s ); // eslint-disable-line
 			let descriptor = {
 				label: this.label,

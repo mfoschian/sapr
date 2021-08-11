@@ -1,8 +1,8 @@
 <template>
 	<div class="mission">
 		<div>
-			<b-button v-if="!mission.configuration" variant="danger" @click="goto_configuration">Configura</b-button>
-			<b-button v-else variant="info">Configurazione</b-button>
+			<b-button v-if="!mission.is_configured()" variant="danger" @click="goto_configuration">Configura</b-button>
+			<b-button v-else variant="info" @click="goto_configuration">Configurazione</b-button>
 		</div>
 		<div>
 			<div v-if="mission.dt_start">Decollo: {{ mission.dt_start | dtm }}</div>

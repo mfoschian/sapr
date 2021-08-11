@@ -15,9 +15,9 @@ export class Mission {
 	}
 
 	is_configured() { return this.uav_setup != null; }
-	is_idle() { return this.is_configured() && this.dt_start == null;  }
-	is_active() { return this.is_configured() && this.dt_start != null && this.dt_end == null;  }
-	is_terminated() { return this.is_configured() && this.dt_start != null && this.dt_end != null; }
+	is_idle() { return this.dt_start == null;  }
+	is_active() { return this.dt_start != null && this.dt_end == null;  }
+	is_terminated() { return this.dt_start != null && this.dt_end != null; }
 
 	save() {
 		// debugger; // eslint-disable-line
