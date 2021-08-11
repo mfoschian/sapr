@@ -13,16 +13,24 @@ import MissionConfigurePage from '@/pages/missions/mission-configure'
 import MissionControlPage from '@/pages/missions/mission-control'
 
 import { Activity } from '@/models/Activity'
-import { Mission } from './models/Mission'
+// import { Mission } from '@/models/Mission'
+import { EquipmentType } from '@/models/EquipmentType'
+import { Equipment } from '@/models/Equipment'
 
 Vue.use(Router)
 
 let data_loaded = false;
 async function ensure_data_is_loaded() {
+
+	console.log('ensure_data_is_loaded'); // eslint-disable-line
+
 	if( data_loaded )
 		return;
 
 	await Activity.read_all();
+	await EquipmentType.read_all();
+	await Equipment.read_all();
+
 	data_loaded = true;
 }
 
@@ -40,6 +48,7 @@ let R = new Router({
 				// All'avvio dell'applicazione devo vedere se c'è già qualche missione in corso
 				// In quel caso devo aprire la pagina della missione in modo da farla completare
 				console.log( 'Starting home page'); // eslint-disable-line
+				/*
 				let mission = Mission.first_active() || Mission.first_idle();
 				if( mission != null ) {
 					let aid = mission.activity_id;
@@ -48,6 +57,7 @@ let R = new Router({
 					next({name: 'mission-control', params: { activity_id: aid, mission_id: mid }});
 					return;
 				}
+				*/
 
 				console.log( 'Going to home page'); // eslint-disable-line
 				next();
@@ -140,6 +150,30 @@ let R = new Router({
 			path: "*", redirect: { name: 'home' }
 		}
 	]
+});
+
+R.beforeEach( (to,from,next) => {
+
+	ensure_data_is_loaded().then( next, next );
+
+	/*
+	if( EquipmentType.count() > 0 && Equipment.count() > 0 )
+		next();
+
+	try {	
+		EquipmentType.read_all().then( () => {
+			return Equipment.read_all()
+		}).then( () => {
+			next();
+		}, (err) => {
+			console.error( err ); // eslint-disable-line
+			next();
+		});
+	}
+	catch( err ) {
+		console.error( err ); // eslint-disable-line
+	}
+	*/
 });
 
 

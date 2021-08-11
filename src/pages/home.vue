@@ -10,8 +10,20 @@
 <script>
 import BasePage from '@/pages/base-page'
 
+import Equipment from '@/models/Equipment'
+import EquipmentType from '@/models/EquipmentType'
+
 export default {
-	components: { BasePage }
+	components: { BasePage },
+	methods: {
+		async loadBaseData() {
+			await EquipmentType.read_all();
+			await Equipment.read_all();
+		}
+	},
+	async mounted() {
+		await this.loadBaseData();
+	}
 	
 }
 </script>

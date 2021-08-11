@@ -48,7 +48,6 @@ let API = {
 			return res;
 		})
 	},
-
 	save_activity: async function( item ) {
 		return upsert( SERVER_URL + '/activities' , item ).then( (res) => adjust_activity(res) );
 	},
@@ -61,7 +60,6 @@ let API = {
 			return res;
 		})
 	},
-
 	save_mission: async function( item ) {
 		return upsert( SERVER_URL + '/missions' , item ).then( (res) => adjust_mission(res) );
 	},
@@ -71,10 +69,18 @@ let API = {
 			return result.data;
 		})
 	},
-	get_slot_templates: async function() {
-		return axios.get(SERVER_URL + '/templates').then( (result) => {
+	save_equipment: async function( item ) {
+		return upsert( SERVER_URL + '/equipments' , item );
+	},
+
+
+	get_equipment_types: async function() {
+		return axios.get(SERVER_URL + '/equipment_types').then( (result) => {
 			return result.data;
 		})
+	},
+	save_equipment_type: async function( item ) {
+		return upsert( SERVER_URL + '/equipment_types' , item );
 	},
 
 };

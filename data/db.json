@@ -30,6 +30,21 @@
       "scenary": 1,
       "flight_type": 1,
       "type": 7
+    },
+    {
+      "id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
+      "title": "test",
+      "dt": "2021-07-31T14:49:00.627Z",
+      "municipality_code": "031023",
+      "locality": "",
+      "alt": "0",
+      "lat": 45.9145216,
+      "lon": 13.336575999999999,
+      "flight_max_height": 100,
+      "category": 2,
+      "scenary": 1,
+      "flight_type": 2,
+      "type": 7
     }
   ],
   "missions": [
@@ -38,7 +53,65 @@
       "activity_id": "c845dd7c-736c-4656-a414-bf67631968c7",
       "dt_start": null,
       "dt_end": null,
-      "configuration": null
+      "uav_setup": {
+        "equip_id": null,
+        "children": []
+      },
+      "meteo_info": {
+        "clouds_coverage": 1,
+        "clouds_height": 1,
+        "visibility": 1,
+        "precipitation": 2,
+        "wind_intensity": 0,
+        "temperature": 25,
+        "humidity": 90,
+        "pression": 5
+      },
+      "sat_info": {
+        "sat_rc": 10,
+        "sat": 6
+      }
+    },
+    {
+      "id": "22a5628e-cdd0-4384-a83a-a005713f1be1",
+      "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
+      "dt_start": "2021-08-11T13:56:29.172Z",
+      "dt_end": "2021-08-11T13:56:32.275Z",
+      "uav_setup": {
+        "equip_id": "{1111}",
+        "children": {
+          "b1": {
+            "equip_id": "{BBBB.1111}",
+            "children": []
+          },
+          "b2": {
+            "equip_id": "{BBXX.1111}",
+            "children": []
+          },
+          "rc": {
+            "equip_id": "RC_1",
+            "children": []
+          },
+          "cam": {
+            "equip_id": "FLIR_A",
+            "children": []
+          }
+        }
+      },
+      "meteo_info": {
+        "clouds_coverage": 1,
+        "clouds_height": 1,
+        "visibility": 1,
+        "precipitation": 1,
+        "wind_intensity": 0,
+        "temperature": 25,
+        "humidity": 90,
+        "pression": 5
+      },
+      "sat_info": {
+        "sat_rc": 0,
+        "sat": 0
+      }
     }
   ],
   "uas": [
@@ -61,89 +134,84 @@
       "name": "UAV 1",
       "type": "UAV_1",
       "id": "{1111}",
-      "descriptor": "UAV_1",
-      "slot": null,
-      "parent": null
+      "used": true
     },
     {
       "name": "UAV 2",
       "type": "UAV_2",
       "id": "{2222}",
-      "descriptor": "UAV_2",
-      "slot": null,
-      "parent": null
+      "used": false
     },
     {
       "name": "Batteria 1",
       "type": "Battery1",
       "id": "{BBBB.1111}",
-      "slot": null,
-      "parent": null
+      "used": true
     },
     {
       "name": "Batteria 2",
       "type": "Battery1",
       "id": "{BBBB.1112}",
-      "slot": null,
-      "parent": null
+      "used": false
     },
     {
       "name": "Batteria X1",
       "type": "Battery2",
       "id": "{BBXX.1111}",
-      "slot": null,
-      "parent": null
+      "used": true
     },
     {
       "name": "Batteria X2",
       "type": "Battery2",
       "id": "{BBXX.1112}",
-      "slot": null,
-      "parent": null
+      "used": false
     },
     {
       "name": "Telecomando M5",
       "type": "Remote1",
       "id": "RC_1",
-      "slot": null,
-      "parent": null
+      "used": true
     },
     {
       "name": "FLIR",
       "type": "FLIR",
       "id": "FLIR_A",
-      "slot": null,
-      "parent": null
+      "used": true
     },
     {
       "name": "WebCam",
       "type": "Cam",
       "id": "Webcam_HD_1",
-      "slot": null,
-      "parent": null
+      "used": false
+    },
+    {
+      "item": {
+        "name": "UAV 2",
+        "type": "UAV_2",
+        "id": "{2222}",
+        "used": false
+      },
+      "used": true,
+      "id": "8439f539-2194-4c72-bf1a-c6f94c894b10"
+    },
+    {
+      "item": {
+        "name": "UAV 2",
+        "type": "UAV_2",
+        "id": "{2222}",
+        "used": false
+      },
+      "used": true,
+      "id": "768d7133-0e5a-4743-be13-dddc76e075e5"
     }
   ],
-  "templates": {
-    "UAV": {
-      "slots": [
-        {
-          "id": "uav",
-          "label": "Drone",
-          "type": [
-            "UAV_1",
-            "UAV_2"
-          ],
-          "required": true,
-          "placeholder": "Scegli il drone"
-        }
-      ]
-    },
+  "equipment_types": {
     "UAV_1": {
       "slots": [
         {
           "id": "b1",
           "label": "Batteria 1",
-          "type": [
+          "accepts": [
             "Battery1",
             "Battery2"
           ],
@@ -153,7 +221,7 @@
         {
           "id": "b2",
           "label": "Batteria 2",
-          "type": [
+          "accepts": [
             "Battery1",
             "Battery2"
           ],
@@ -163,14 +231,16 @@
         {
           "id": "rc",
           "label": "Telecomando",
-          "type": "Remote1",
+          "accepts": [
+            "Remote1"
+          ],
           "required": true,
           "placeholder": "Scegli il telecomando"
         },
         {
           "id": "cam",
           "label": "Fotocamera",
-          "type": [
+          "accepts": [
             "Cam",
             "FLIR"
           ],

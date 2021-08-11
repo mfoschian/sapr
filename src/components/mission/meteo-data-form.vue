@@ -11,6 +11,7 @@
 				:options="clouds_coverage_options"
 				stacked
 				align="left"
+				@change="update"
 			></b-form-select>		
 		</b-form-group>
 
@@ -25,6 +26,7 @@
 				:options="clouds_height_options"
 				stacked
 				align="left"
+				@change="update"
 			></b-form-select>		
 		</b-form-group>
 		
@@ -39,6 +41,7 @@
 				:options="visibility_options"
 				stacked
 				align="left"
+				@change="update"
 			></b-form-select>		
 		</b-form-group>
 				
@@ -53,6 +56,7 @@
 				:options="precipitation_options"
 				stacked
 				align="left"
+				@change="update"
 			></b-form-select>		
 		</b-form-group>
 		
@@ -65,8 +69,9 @@
 				<b-form-input
 					type="number"
 					id="wind-velocity"
-					v-model="wind_intensity"
+					v-model.number="wind_intensity"
 					align="left"
+					@change="update"
 				></b-form-input>
 			</b-input-group>
 		</b-form-group>
@@ -80,8 +85,9 @@
 				<b-form-input
 					type="number"
 					id="the-temperature"
-					v-model="temperature"
+					v-model.number="temperature"
 					align="left"
+					@change="update"
 				></b-form-input>
 			</b-input-group>
 		</b-form-group>
@@ -96,8 +102,9 @@
 				<b-form-input
 					type="number"
 					id="the-humidity"
-					v-model="humidity"
+					v-model.number="humidity"
 					align="left"
+					@change="update"
 				></b-form-input>
 			</b-input-group>
 		</b-form-group>
@@ -112,8 +119,9 @@
 				<b-form-input
 					type="number"
 					id="the-pression"
-					v-model="pression"
+					v-model.number="pression"
 					align="left"
+					@change="update"
 				></b-form-input>
 			</b-input-group>
 		</b-form-group>
@@ -137,19 +145,11 @@ const default_config = {
 
 export default {
 	props: {
-		cfg: { type: Object, default: () => default_config }
+		value: { type: Object, default: () => default_config }
 	},
 	data() {
-		return {
-			clouds_coverage: this.cfg.clouds_coverage,
-			clouds_height: this.cfg.clouds_height,
-			visibility: this.cfg.visibility,
-			precipitation: this.cfg.precipitation,
-			wind_intensity: this.cfg.wind_intensity,
-			temperature: this.cfg.temperature,
-			humidity: this.cfg.humidity,
-			pression: this.cfg.pression
-		}
+		// debugger; // eslint-disable-line
+		return Object.assign({}, default_config, this.value );
 	},
 	computed: {
 		clouds_coverage_options() {
@@ -180,6 +180,24 @@ export default {
 				{ value: 3, text: 'intensa' }
 			];
 		}
+	},
+	methods: {
+		update() {
+			this.$emit('input', {
+				clouds_coverage: this.clouds_coverage,
+				clouds_height: this.clouds_height,
+				visibility: this.visibility,
+				precipitation: this.precipitation,
+				wind_intensity: this.wind_intensity,
+				temperature: this.temperature,
+				humidity: this.humidity,
+				pression: this.pression
+			});
+		}
+	},
+	mounted() {
+		if( this.value == null || Object.keys(this.value) == 0 )
+			this.update();
 	}
 }
 </script>
