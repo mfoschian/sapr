@@ -9,13 +9,12 @@ export class Mission {
 		this.activity_id = m.activity_id;
 		this.dt_start = m.dt_start || null;
 		this.dt_end = m.dt_end || null;
-		this.configuration = m.configuration || null;
-		// this.type_id = id dell'unico MissionType che servirebbe (UAS)
-		// this.root_equip_type_id = id dell'equipment type legato al mission type UAS ... per il momento cablato
-
+		this.uav_setup = m.uav_setup || null; // assignment ovvero: { equip_id, children: {slot_id: assignment} }
+		this.meteo_info = m.meteo_info || null;
+		this.sat_info = m.sat_info || null;
 	}
 
-	is_configured() { return this.configuration != null; }
+	is_configured() { return this.uav_setup != null; }
 	is_idle() { return this.is_configured() && this.dt_start == null;  }
 	is_active() { return this.is_configured() && this.dt_start != null && this.dt_end == null;  }
 	is_terminated() { return this.is_configured() && this.dt_start != null && this.dt_end != null; }
@@ -28,7 +27,10 @@ export class Mission {
 			status: this.status,
 			dt_start: this.dt_start || null,
 			dt_end: this.dt_end || null,
-			configuration: this.configuration
+			// configuration_id: this.configuration_id
+			uav_setup: this.uav_setup || null,
+			meteo_info: this.meteo_info,
+			sat_info: this.sat_info
 		});
 	}
 
@@ -57,7 +59,7 @@ export class Mission {
 		// debugger; // eslint-disable-line
 		
 		let item = store.state.missions.find( m => {
-			return (m.configuration != null && m.dt_start != null && m.dt_end == null) 
+			return (m.uav_setup != null && m.dt_start != null && m.dt_end == null) 
 		});
 		if( !item )
 			return null;
@@ -66,7 +68,7 @@ export class Mission {
 	}
 
 	static first_idle() {
-		let item = store.state.missions.find( m => (m.configuration != null && m.dt_start == null) );
+		let item = store.state.missions.find( m => (m.uav_setup != null && m.dt_start == null) );
 		if( !item )
 			return null;
 		else

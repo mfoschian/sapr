@@ -8,9 +8,10 @@
 			<b-form-input
 				type="number"
 				id="num-sat-rc"
-				v-model="sat_rc"
+				v-model.number="sat_rc"
 				align="left"
 				min="0"
+				@change="update"
 			></b-form-input>
 		</b-form-group>
 
@@ -23,9 +24,10 @@
 			<b-form-input
 				type="number"
 				id="num-sat"
-				v-model="sat"
+				v-model.number="sat"
 				align="left"
 				min="0"
+				@change="update"
 			></b-form-input>
 		</b-form-group>
 	</b-form>
@@ -34,13 +36,25 @@
 <script>
 export default {
 	props: {
-		cfg: { type: Object, default: () => ({sat_rc:0, sat:0}) }
+		value: { type: Object, default: () => ({sat_rc:0, sat:0}) }
 	},
 	data() {
 		return {
-			sat_rc: this.cfg.sat_rc || 0,
-			sat: this.cfg.sat || 0
+			sat_rc: this.value.sat_rc || 0,
+			sat: this.value.sat || 0
 		}
+	},
+	methods: {
+		update() {
+			this.$emit('input', {
+				sat_rc: this.sat_rc,
+				sat: this.sat
+			});
+		}
+	},
+	mounted() {
+		if( this.value == null || Object.keys(this.value) == 0 )
+			this.update();
 	}
 }
 </script>

@@ -1,17 +1,22 @@
 <template>
 	<b-container fluid class="slot_list">
-		<b-row v-if="assignments.lenght > 0">
+		<b-row>
 			<b-col cols="2" class="slot-label">{{ label }}</b-col>
-			<b-col cols="10" class="slot-content" >
-				<div @click.stop="choose_item" class="clickable">{{ loc_item ? loc_item.name : placeholder }}</div>
-				<div class="slot-sub-content" v-for="s in item_slots" :key="s.id">
-					<equipment-slot :descriptor="s.descriptor" :id="s.id" :item="s.item" :parent_item_id="s.parent_item_id" />
+			<b-col :cols="empty ? 10 : 9" class="slot-content">
+				<div @click.stop="choose_item" class="clickable equip_name">{{ equipment_name }}</div>
+				<div class="slot-sub-content" v-for="child in child_slots" :key="child.id">
+					<equipment-slot
+						:label="child.label"
+						:placeholder="child.placeholder"
+						:accepts="child.accepts"
+						:assignment="child.assignment"
+						@changed="child_changed($event,child.id)"
+					/>
 				</div>
 			</b-col>
-		</b-row>
-		<b-row v-else>
-			<b-col cols="2" class="slot-label suspance"></b-col>
-			<b-col cols="10" class="slot-content suspance"></b-col>
+			<b-col v-if="!empty" cols="1">
+				<b-button size="sm" @click="remove_item"><b-icon-trash-fill /></b-button>
+			</b-col>
 		</b-row>
 	</b-container>
 </template>
@@ -24,68 +29,119 @@ export default {
 	name: 'EquipmentSlot',
 	inject: ['choose_item_for'],
 	props: {
-		equip_type_id: { type: String, default: null },
-		assignments: { type: Array, default: () => [] },
 		label: { type: String, default: "" },
 		placeholder: { type: String, default: "" },
-
-		descriptor: { type: Object, default: () => null },
-		item: { type: Object, default: () => null },
-		id: { type: String, default: () => null },
-		parent_item_id: { type: String, default: null }
+		accepts: { type: Array, default: () => [] }, // [ equip_type_id, ... ]
+		required: { type: Boolean, default: false },
+		assignment: { type: Object, default: null }, // { equip_id, children {slot_id: assignment } }
 	},
 	data() {
 		return {
-			loc_item: this.item,
 		};
 	},
 	computed: {
-		item_slots() {
-			if( this.loc_item == null ) return [];
-			let template = SlotTemplate.find_by_id( this.loc_item.descriptor || this.loc_item.type );
-			if( !template || !template.slots ) return [];
+		equipment() {
+			if( !this.assignment ) return null;
+			return Equipment.find_by_id( this.assignment.equip_id );
+		},
+		empty() {
+			return this.equipment == null;
+		},
+		equipment_name() {
+			if( this.equipment )
+				return this.equipment.name;
+			else
+				return this.placeholder;
+		},
+		child_slots() {
+			if( !this.equipment ) return [];
+			// debugger; // eslint-disable-line
 
-			let childs = Equipment.get_childs_of( this.loc_item.id );
-			let res = template.slots.map( s => ({
-				descriptor: s,
-				item: childs.filter( x => s.slot == x.id )[0],
-				id: s.id,
-				parent_item_id: this.loc_item.id
+			let equip_type = EquipmentType.get( this.equipment.type );
+			if( !equip_type ) return [];
+			let slots = equip_type.slots || [];
+			let children = this.assignment.children || {};
+			return slots.map( slot => ({
+				id: slot.id,
+				label: slot.label,
+				placeholder: slot.placeholder,
+				accepts: slot.accepts,
+				assignment: children[ slot.id ]
 			}));
-			return res;
 		}
 	},
 	methods: {
-		add_slot( id, slot_template ) {
-			let descriptor = {
-				id: id,
-				label: slot_template.label,
-				type: slot_template.type,
-				required: slot_template.required,
-				placeholder: slot_template.placeholder
-			};
-			this.childs.push( descriptor );
+		async free_assignment( ass ) {
+			// Segna come libero l'oggetto legato all'assegnazione passata e tutti i suoi figli
+			if( !ass || !ass.equip_id ) return;
+
+			await Equipment.free( ass.equip_id );
+
+			if( ass.children ) {
+				let child_ass = Object.values(ass.children);
+				for( let i=0; i<child_ass.length; i++ ) {
+					await this.free_assignment( child_ass[i] );
+				}
+			}
 		},
 		async choose_item() {
 			// console.log( s ); // eslint-disable-line
-			let res = await this.choose_item_for( this.descriptor, this.loc_item );
-			console.log( res ); // eslint-disable-line
+			let descriptor = {
+				label: this.label,
+				placeholder: this.placeholder,
+				accepts: this.accepts,
+				required: this.required
+			};
 
-			if( res.new_id == null )
+			let res = await this.choose_item_for( descriptor, this.equipment );
+			// console.log( res ); // eslint-disable-line
+
+			if( res.new_id == res.old_id )
 				// no item change
 				return;
 
 			if( res.old_id != null ) {
-				Equipment.free_childs_of( res.old_id );
-				Equipment.free( res.old_id )
-			}
-			let choosed_item = Equipment.find_by_id( res.new_id );
-			if( choosed_item ) {
-				Equipment.assign( choosed_item.id, this.id, this.parent_item_id);
+				// oggetto sostituito: libera l'oggetto precedente e tutti i suoi figli
+				await this.free_assignment( this.assignment );
 			}
 
-			this.loc_item = choosed_item;
+			if( res.new_id != null ) {
+				// Segna come occupato l'equipment scelto 
+				await Equipment.assign( res.new_id );
+			}
+
+			// Propaga la modifica al contenitore dello slot
+			this.$emit( 'changed', { equip_id: res.new_id, children: [] });
 		},
+		async remove_item() {
+			// oggetto rimosso: libera l'oggetto precedente e tutti i suoi figli
+			await this.free_assignment( this.assignment );
+			// this.$emit( 'changed', { equip_id: null, children: [] });
+			this.$emit( 'changed', {} );
+		},
+		child_changed( ass, slot_id ) {
+			// Qui devo propagare la modifica dell'assegnazione figla al contenitore...
+			// Significa che devo duplicare l'assegnazione corrente (con lo slot indicato contenente la modifica al figlio)
+			// e passsarla al contenitore come nuova assengazione
+			// Il free e l'assign dei figli dovrebbe essere già a posto in quanto gestita dal figlio stesso
+			if( !this.equipment ) {
+				// non dovrebbe accadere: se non ho scelto un elemento non dovrebbe essere possibile avere degli elementi figlio !
+				return;
+			}
+
+			// Copio tutte le assegnazioni figlie tranne quella dello slot con la modifica: per quella piglio l'assegnazione passata come argomento
+			let children = Object.assign( {}, this.assignment.children || {});
+			children[slot_id] = ass;
+
+			let new_assignment = {
+				equip_id: this.equipment.id,
+				children: children
+			};
+
+			// console.log( 'new_assignment:'); // eslint-disable-line
+			// console.log( new_assignment ); // eslint-disable-line
+			this.$emit('changed', new_assignment);
+		}
 	},
 }
 </script>
@@ -98,6 +154,7 @@ export default {
 	margin-bottom: 0.5em;
 	border-top-left-radius: 0.4em;
 	border-bottom-left-radius: 0.4em;
+	text-align: center;
 }
 
 .slot-content {
@@ -106,6 +163,10 @@ export default {
 	margin-bottom: 0.5em;
 	border-top-right-radius: 0.4em;
 	border-bottom-right-radius: 0.4em;
+}
+
+.slot-content .equip_name {
+	margin-bottom: 0.7em;
 }
 
 .clickable {

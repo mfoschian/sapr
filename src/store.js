@@ -14,7 +14,7 @@ let _store = new Vuex.Store({
 		missions: [],
 		equipments: [],
 		slot_templates: {},
-		equipment_types: [],
+		equipment_types: {},
 		configurations: [],
 		on_line: true
 	},
@@ -64,19 +64,14 @@ let _store = new Vuex.Store({
 		},
 
 		setEquipments( state, data ) { state.equipments = data;	},
-		setSlotTemplates( state, data ) { state.slot_templates = data; },
-		setEquipmentAssignment( state, data ) {
-			let eq = data.item;
+		setEquipmentTypes( state, data ) { state.equipment_types = data; },
+		setEquipmentAssignment( state, eq ) {
 			if(!eq) return;
-
-			eq.slot = data.slot_id;
-			eq.parent = data.parent_id;
+			eq.used = true;
 		},
 		removeEquipmentAssignment( state, eq ) {
 			if(!eq) return;
-
-			eq.slot = null;
-			eq.parent = null;
+			eq.used = false;
 		}
 	},
 	actions: {
@@ -136,20 +131,22 @@ let _store = new Vuex.Store({
 				console.error( err ); // eslint-disable-line
 			}
 		},
-		async loadSlotTemplates( {commit} ) {
+		async loadEquipmentTypes( {commit} ) {
 			try {
-				let data = await API.get_slot_templates();
-				commit( 'setSlotTemplates', data );
+				let data = await API.get_equipment_types();
+				commit( 'setEquipmentTypes', data );
 			}
 			catch( err ) {
 				console.error( err ); // eslint-disable-line
 			}
 		},
-		assignEquipment( {commit}, data ) {
+		async assignEquipment( {commit}, data ) {
 			commit( 'setEquipmentAssignment', data );
+			await API.save_equipment( data );
 		},
-		freeEquipment( {commit}, data ) {
+		async freeEquipment( {commit}, data ) {
 			commit( 'removeEquipmentAssignment', data );
+			await API.save_equipment( data );
 		},
 
 
