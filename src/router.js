@@ -12,10 +12,15 @@ import MissionNewPage from '@/pages/missions/mission-new'
 import MissionConfigurePage from '@/pages/missions/mission-configure'
 import MissionControlPage from '@/pages/missions/mission-control'
 
+import PilotsListPage from '@/pages/pilots/pilots-list'
+import PilotEditor from '@/pages/pilots/pilot-edit'
+import PilotNew from '@/pages/pilots/pilot-new'
+
 import { Activity } from '@/models/Activity'
 // import { Mission } from '@/models/Mission'
 import { EquipmentType } from '@/models/EquipmentType'
 import { Equipment } from '@/models/Equipment'
+import { Pilot } from '@/models/Pilot'
 
 Vue.use(Router)
 
@@ -30,6 +35,7 @@ async function ensure_data_is_loaded() {
 	await Activity.read_all();
 	await EquipmentType.read_all();
 	await Equipment.read_all();
+	await Pilot.read_all();
 
 	data_loaded = true;
 }
@@ -146,6 +152,50 @@ let R = new Router({
 			meta: { requiresAuth: false },
 			props: true,
 		},
+
+		{
+			path: '/pilots',
+			name: 'pilots-list',
+			component: PilotsListPage,
+			props: true,
+			beforeEnter: async (to,from,next) => {
+				to.params.pilots = await Pilot.read_all();
+				next();
+			},
+			meta: { requiresAuth: false }
+
+		},
+		{
+			path: '/pilots/new',
+			name: 'new-pilot',
+			component: PilotNew,
+			meta: { requiresAuth: false }
+		},
+		{
+			path: '/pilots/:id/edit',
+			name: 'edit-pilot',
+			component: PilotEditor,
+			meta: { requiresAuth: false },
+			props: true,
+			beforeEnter: (to,from,next) => {
+				// debugger; // eslint-disable-line
+				console.log( 'About to editing pilot %s', to.params.id); // eslint-disable-line
+				let pilot = Pilot.get(to.params.id)
+				if( pilot == null ) {
+					console.log( 'Pilot %s not found: route to error page', to.params.id); // eslint-disable-line
+					next('/errors/pilot_not_found');
+				}
+				else {
+					console.log( 'Going to %s', pilot.name || '?'); // eslint-disable-line
+					to.params.pilot = pilot;
+					next();
+				}
+			}
+		},
+
+
+
+
 		{
 			path: "*", redirect: { name: 'home' }
 		}

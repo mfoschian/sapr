@@ -83,6 +83,15 @@ let API = {
 		return upsert( SERVER_URL + '/equipment_types' , item );
 	},
 
+	get_pilots: async function() {
+		return axios.get(SERVER_URL + '/pilots').then( (result) => {
+			return result.data;
+		})
+	},
+	save_pilot: async function( item ) {
+		return upsert( SERVER_URL + '/pilots' , item );
+	}
+
 };
 
 

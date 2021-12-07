@@ -13,6 +13,7 @@ let _store = new Vuex.Store({
 		activities: [],
 		missions: [],
 		equipments: [],
+		pilots: [],
 		slot_templates: {},
 		equipment_types: {},
 		configurations: [],
@@ -72,6 +73,14 @@ let _store = new Vuex.Store({
 		removeEquipmentAssignment( state, eq ) {
 			if(!eq) return;
 			eq.used = false;
+		},
+
+		setPilots( state, data ) { state.pilots = data; },
+		addPilot( state, data ) { state.pilots.push( data );	},
+		updatePilot( state, data ) {
+			let ix = state.pilots.findIndex( a => a.id == data.id );
+			if( ix < 0 ) throw new Error( 'Pilot not found' );
+			state.pilots.splice( ix, 1, data );
 		}
 	},
 	actions: {
@@ -179,7 +188,31 @@ let _store = new Vuex.Store({
 			catch( err ) {
 				console.error( err ); // eslint-disable-line
 			}
-		}
+		},
+
+		async loadPilots( {commit} ) {
+			try {
+				let data = await API.get_pilots();
+				commit( 'setPilots', data );
+			}
+			catch( err ) {
+				console.error( err ); // eslint-disable-line
+			}
+		},
+		async savePilot( {commit}, item ) {
+			try {
+				let is_new = item.id == null;
+				let data = await API.save_pilot( item );
+				if( is_new )
+					commit( 'addPilot', data );
+				else
+					commit( 'updatePilot', data );
+			}
+			catch( err ) {
+				console.error( err ); // eslint-disable-line
+			}
+		},
+
 	}
 });
 
