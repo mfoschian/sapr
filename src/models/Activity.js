@@ -98,6 +98,14 @@ export class Activity {
 		return res;
 	}
 
+	clone_last_mission() {
+		let l = this.last_mission();
+		if( l != null )
+			return l.clone();
+		else
+			return new Mission( { activity_id: this.id } );
+	}
+
 	async add_mission( m ) {
 		if( !m )
 			return Promise.reject('No mission to add to activity '+this.id);

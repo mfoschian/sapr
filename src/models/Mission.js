@@ -1,5 +1,6 @@
 import store from '@/store';
 
+import { deep_clone } from '@/utilities/object_utilities.js'
 
 export class Mission {
 
@@ -14,7 +15,7 @@ export class Mission {
 		this.sat_info = m.sat_info || null;
 	}
 
-	is_configured() { return this.uav_setup != null; }
+	is_configured() { return this.uav_setup != null && this.uav_setup.equip_id != null; }
 	is_idle() { return this.dt_start == null;  }
 	is_active() { return this.dt_start != null && this.dt_end == null;  }
 	is_terminated() { return this.dt_start != null && this.dt_end != null; }
@@ -73,5 +74,16 @@ export class Mission {
 			return null;
 		else
 			return new Mission( item );
+	}
+
+	clone() {
+		let m = {
+			activity_id: this.activity_id,
+			uav_setup : deep_clone( this.uav_setup ),
+			meteo_info : deep_clone( this.meteo_info ),
+			sat_info : deep_clone( this.sat_info )
+		};
+
+		return new Mission( m );
 	}
 }

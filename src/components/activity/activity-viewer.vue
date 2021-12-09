@@ -62,6 +62,16 @@
 		<b-row>
 			<b-col sm="2">Missioni: ({{ missions.length }})</b-col>
 			<b-col sm="10">
+				<div v-if="!mission_running"
+					class="mission-item text-center">
+					<b-button
+						variant="primary"
+						@click="add_mission"
+					>
+						<b-icon-record-circle />
+						Nuova missione
+					</b-button>
+				</div>
 				<div class="mission-item" v-for="m in ordered_missions" :key="m.id" >
 					<MissionControl	:mission="m" />
 				</div>
@@ -70,12 +80,12 @@
 
 		<div class="buttons">
 			<b-button
-				v-if="active_missions.length == 0"
-				variant="primary"
-				@click="add_mission"
+				v-if="missions.length > 0"
+				variant="warning"
+				@click="close_activity"
 			>
-				<b-icon-record-circle />
-				Avvia missione
+				<b-icon-lock-fill />
+				Chiudi Attività
 			</b-button>
 		</div>
 	</b-container>
@@ -83,6 +93,7 @@
 
 <script>
 import { Activity, ActivityCategories, ActivityScenaries, ActivityFlightTypes, ActivityTypes } from '@/models/Activity'
+// import { Mission } from '@/models/Mission'
 import Municipalities from '../../../data/municipalities.fvg.csv'
 import { formatDt } from '@/utilities/dates.js'
 
@@ -146,11 +157,26 @@ export default {
 		ordered_missions() {
 			const sort_criteria = [ sort_by_status, sort_by_dt_reverse ];
 			return this.missions.concat().sort( sort_composition( sort_criteria ) )
+		},
+		mission_running() {
+			let mm = this.missions.filter( m => m.dt_end == null );
+			return mm.length > 0;
+		},
+		last_mission() {
+			return this.ordered_missions[0];
 		}
 	},
 	methods: {
-		add_mission() {
-			this.$router.push({name: 'activity-missions', params: { activity_id: this.activity.id }})
+		async add_mission() {
+			let m = this.activity.clone_last_mission();
+			await m.save();
+
+			// this.$router.push({name: 'new-mission', params: {
+			// 	a_id: this.activity_id
+			// }});			
+		},
+		async close_activity() {
+
 		}
 	},
 	filters: {

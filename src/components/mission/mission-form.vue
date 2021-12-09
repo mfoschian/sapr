@@ -27,17 +27,13 @@
 		</b-form-group>
 
 		<div class="buttons">
-			<b-button v-if="is_new_record"
-				variant="primary"
+			<b-button
+				:variant="save_button_variant"
 				@click="save_record"
 				:disabled="!valid_form"
 			>
 				<b-icon-exclamation v-if="!valid_form" />
-				<b-spinner small v-if="saving"></b-spinner> Crea </b-button>
-			<b-button v-else
-				variant="danger" @click="save_record" :disabled="!valid_form">
-				<b-icon-exclamation v-if="!valid_form" />
-				<b-spinner small v-if="saving"></b-spinner> Aggiorna </b-button>
+				<b-spinner small v-if="saving"></b-spinner> {{ save_button_label }} </b-button>
 			<!--
 			<b-button variant="info" @click="pdfPreview">Anteprima PDF</b-button>
 			-->
@@ -71,7 +67,13 @@ export default {
 		},
 		is_new_record() {
 			return this.mission.id == null;
-		}
+		},
+		save_button_label() {
+			return this.is_new_record ? 'Crea' : 'Aggiorna';
+		},
+		save_button_variant() {
+			return this.is_new_record ? 'primary' : 'danger';
+		},
 	},
 	methods: {
 
