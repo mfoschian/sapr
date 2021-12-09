@@ -120,5 +120,10 @@ export class Activity {
 		// debugger; // eslint-disable-line
 		let a = store.state.activities.find( it => it.id == id ) || null;
 		return new Activity(a);
-	}	
+	}
+
+	static count() {
+		let aa = store.state.activities;
+		return aa ? aa.length : 0;
+	}
 }

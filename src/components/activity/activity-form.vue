@@ -76,21 +76,21 @@
 			:state="valid_coords"
 			invalid-feedback="Coordinate non valide"
 		>
-			<b-input-group prepend="lat">
+			<b-input-group prepend="lat" class="w-3em">
 				<b-form-input
 					v-model="lat"
 					align="left"
 					:state="valid_lat"
 				></b-form-input>		
 			</b-input-group>
-			<b-input-group prepend="lon" >
+			<b-input-group prepend="lon" class="w-3em">
 				<b-form-input
 					v-model="lon"
 					align="left"
 					:state="valid_lon"
 				></b-form-input>		
 			</b-input-group>
-			<b-input-group prepend="alt">
+			<b-input-group prepend="alt" class="w-3em">
 				<b-form-input
 					v-model="alt"
 					align="left"
@@ -319,5 +319,9 @@ export default {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+}
+
+.input-group.w-3em .input-group-prepend .input-group-text {
+	min-width: 3em;
 }
 </style>

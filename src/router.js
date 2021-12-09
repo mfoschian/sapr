@@ -17,7 +17,6 @@ import PilotEditor from '@/pages/pilots/pilot-edit'
 import PilotNew from '@/pages/pilots/pilot-new'
 
 import { Activity } from '@/models/Activity'
-// import { Mission } from '@/models/Mission'
 import { EquipmentType } from '@/models/EquipmentType'
 import { Equipment } from '@/models/Equipment'
 import { Pilot } from '@/models/Pilot'
@@ -47,25 +46,10 @@ let R = new Router({
 			name: 'home',
 			component: Home,
 			meta: { requiresAuth: false },
+			props: true,
 			beforeEnter: async (to,from,next) => {
 				// debugger; // eslint-disable-line
 				await ensure_data_is_loaded();
-
-				// All'avvio dell'applicazione devo vedere se c'è già qualche missione in corso
-				// In quel caso devo aprire la pagina della missione in modo da farla completare
-				console.log( 'Starting home page'); // eslint-disable-line
-				/*
-				let mission = Mission.first_active() || Mission.first_idle();
-				if( mission != null ) {
-					let aid = mission.activity_id;
-					let mid = mission.id;
-					console.log( 'Activity %s has a mission %s running or idle: go to mission page', aid, mid); // eslint-disable-line
-					next({name: 'mission-control', params: { activity_id: aid, mission_id: mid }});
-					return;
-				}
-				*/
-
-				console.log( 'Going to home page'); // eslint-disable-line
 				next();
 			}			
 		},
@@ -206,24 +190,6 @@ R.beforeEach( (to,from,next) => {
 
 	ensure_data_is_loaded().then( next, next );
 
-	/*
-	if( EquipmentType.count() > 0 && Equipment.count() > 0 )
-		next();
-
-	try {	
-		EquipmentType.read_all().then( () => {
-			return Equipment.read_all()
-		}).then( () => {
-			next();
-		}, (err) => {
-			console.error( err ); // eslint-disable-line
-			next();
-		});
-	}
-	catch( err ) {
-		console.error( err ); // eslint-disable-line
-	}
-	*/
 });
 
 
