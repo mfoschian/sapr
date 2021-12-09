@@ -38,6 +38,30 @@ Equipment.free = async function(item_id) {
 	return true;
 }
 
+Equipment.assign_multiple = async function( ids ) {
+	let ee = ids.map( id => Equipment.find_by_id(id) );
+	let used = ee.filter( e => e.used == true );
+
+	if( used.length > 0 )
+		// some equipment id already busy: refuse transaction
+		return false;
+
+	for( let i=0; i<ee.length; i++ ) {
+		await store.dispatch('assignEquipment', ee[i] );
+	}
+	return true;
+}
+
+Equipment.free_multiple = async function( ids ) {
+	let ee = ids.map( id => Equipment.find_by_id(id) );
+
+	for( let i=0; i<ee.length; i++ ) {
+		await store.dispatch('freeEquipment', ee[i] );
+	}
+	return true;
+}
+
+
 Equipment.count = function() {
 	return store.state.equipments.length;
 }

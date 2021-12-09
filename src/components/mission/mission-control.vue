@@ -5,7 +5,7 @@
 				<div v-if="mission.dt_start">Decollo: {{ mission.dt_start | dtm }}</div>
 				<b-button v-else @click="take_off">Decolla</b-button>
 			</b-col>
-			<b-col>
+			<b-col v-if="mission.dt_start">
 				<div v-if="mission.dt_end">Atterraggio: {{ mission.dt_end | dtm }}</div>
 				<b-button v-else @click="landed" :disabled="mission.dt_start == null">Atterrato</b-button>
 			</b-col>
@@ -13,7 +13,10 @@
 				{{ main_equip.name }}
 			</b-col>
 			<b-col>
-				<b-button variant="info" @click="goto_configuration">Configurazione</b-button>
+				<b-button variant="info"
+					@click="goto_configuration"
+					:disabled="mission.dt_start != null && mission.dt_end == null"
+				>Configurazione</b-button>
 			</b-col>
 		</b-row>
 		<b-row v-else>
@@ -62,6 +65,7 @@ export default {
 		},
 		async landed() {
 			await this.mission.landed();
+			await this.mission.free_equipment();
 			// this.$emit('input', this.mission);
 		}
 	},

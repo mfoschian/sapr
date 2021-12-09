@@ -1,6 +1,7 @@
 import store from '@/store';
 
 import { deep_clone } from '@/utilities/object_utilities.js'
+import Equipment from './Equipment';
 
 export class Mission {
 
@@ -85,5 +86,66 @@ export class Mission {
 		};
 
 		return new Mission( m );
+	}
+
+/*
+      "uav_setup": {
+        "equip_id": "{1111}",
+        "children": {
+          "b1": {
+            "equip_id": "{BBBB.1111}",
+            "children": []
+          },
+          "b2": {
+            "equip_id": "{BBXX.1111}",
+            "children": []
+          },
+          "rc": {
+            "equip_id": "RC_1",
+            "children": []
+          },
+          "cam": {
+            "equip_id": "FLIR_A",
+            "children": []
+          }
+        }
+*/
+
+	_collect_equipment_ids(ids, item) {
+		if( item == null )
+			return;
+
+		let id = item.equip_id;
+		for( let i=0; i<ids.length; i++ ) {
+			if( ids[i] == id ) {
+				// already visited
+				id = null;
+				break;
+			}
+		}
+
+		if( id != null )
+			ids.push( item.equip_id );
+
+		let children = Object.values(item.children);
+		for( let i=0; i<children.length; i++ ) {
+			this._collect_equipment_ids( ids, children[i]);
+		}
+	}
+
+	async assign_equipment() {
+		let ids = [];
+		this._collect_equipment_ids( ids, this.uav_setup );
+
+		let ok = await Equipment.assign_multiple( ids );
+		return ok;
+	}
+
+	async free_equipment() {
+		let ids = [];
+		this._collect_equipment_ids( ids, this.uav_setup );
+
+		let ok = await Equipment.free_multiple( ids );
+		return ok;
 	}
 }

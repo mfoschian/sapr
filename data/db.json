@@ -49,19 +49,19 @@
   ],
   "missions": [
     {
-      "id": "22a5628e-cdd0-4384-a83a-a005713f1be1",
+      "id": "b274e4fd-69d8-4874-9716-65ec888b628e",
       "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
-      "dt_start": "2021-08-11T13:56:29.172Z",
-      "dt_end": "2021-08-11T13:56:32.275Z",
+      "dt_start": "2021-12-09T17:41:02.191Z",
+      "dt_end": "2021-12-09T17:41:11.318Z",
       "uav_setup": {
         "equip_id": "{1111}",
         "children": {
           "b1": {
-            "equip_id": "{BBBB.1111}",
+            "equip_id": "{BBBB.1112}",
             "children": []
           },
           "b2": {
-            "equip_id": "{BBXX.1111}",
+            "equip_id": "{BBBB.1111}",
             "children": []
           },
           "rc": {
@@ -69,7 +69,7 @@
             "children": []
           },
           "cam": {
-            "equip_id": "FLIR_A",
+            "equip_id": "Webcam_HD_1",
             "children": []
           }
         }
@@ -85,15 +85,15 @@
         "pression": 5
       },
       "sat_info": {
-        "sat_rc": 0,
-        "sat": 0
+        "sat_rc": 5,
+        "sat": 4
       }
     },
     {
-      "id": "e70e82b9-2a60-4726-abf8-dc5440274935",
-      "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
-      "dt_start": "2021-08-11T14:19:21.824Z",
-      "dt_end": "2021-08-11T14:19:22.881Z",
+      "id": "cad086c9-263b-4a4a-95f0-240dcbc37673",
+      "activity_id": "c845dd7c-736c-4656-a414-bf67631968c7",
+      "dt_start": "2021-12-09T17:57:50.569Z",
+      "dt_end": "2021-12-09T17:58:14.735Z",
       "uav_setup": {
         "equip_id": "{2222}",
         "children": []
@@ -114,33 +114,19 @@
       }
     },
     {
-      "id": "71e3bfd4-bfc3-4cb6-8077-439981280c37",
+      "id": "4b3243e6-eb3c-4694-ae1c-2ddbb1717ad2",
       "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
-      "dt_start": "2021-08-11T15:27:30.411Z",
-      "dt_end": "2021-08-11T15:27:32.316Z",
-      "meteo_info": {
-        "clouds_coverage": 1,
-        "clouds_height": 1,
-        "visibility": 1,
-        "precipitation": 1,
-        "wind_intensity": 0,
-        "temperature": 25,
-        "humidity": 900,
-        "pression": 5
-      },
-      "sat_info": {
-        "sat_rc": 3,
-        "sat": 3
-      },
+      "dt_start": "2021-12-09T17:43:13.053Z",
+      "dt_end": "2021-12-09T17:43:24.601Z",
       "uav_setup": {
         "equip_id": "{1111}",
         "children": {
           "b1": {
-            "equip_id": "{BBBB.1111}",
+            "equip_id": "{BBBB.1112}",
             "children": []
           },
           "b2": {
-            "equip_id": "{BBXX.1111}",
+            "equip_id": "{BBBB.1111}",
             "children": []
           },
           "rc": {
@@ -148,26 +134,40 @@
             "children": []
           },
           "cam": {
-            "equip_id": "FLIR_A",
+            "equip_id": "Webcam_HD_1",
             "children": []
           }
         }
+      },
+      "meteo_info": {
+        "clouds_coverage": 1,
+        "clouds_height": 1,
+        "visibility": 1,
+        "precipitation": 1,
+        "wind_intensity": 0,
+        "temperature": 25,
+        "humidity": 90,
+        "pression": 5
+      },
+      "sat_info": {
+        "sat_rc": 5,
+        "sat": 4
       }
     },
     {
-      "id": "c5db158c-45da-476c-9ac2-5a96f5d44e0b",
+      "id": "4294e57d-02ea-4e4f-b2a6-cc3b8d2683d1",
       "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
-      "dt_start": "2021-08-11T15:31:55.963Z",
-      "dt_end": "2021-08-11T15:34:29.036Z",
+      "dt_start": "2021-12-09T17:44:33.684Z",
+      "dt_end": "2021-12-09T17:44:35.075Z",
       "uav_setup": {
         "equip_id": "{1111}",
         "children": {
           "b1": {
-            "equip_id": "{BBBB.1111}",
+            "equip_id": "{BBBB.1112}",
             "children": []
           },
           "b2": {
-            "equip_id": "{BBXX.1111}",
+            "equip_id": "{BBBB.1111}",
             "children": []
           },
           "rc": {
@@ -175,7 +175,7 @@
             "children": []
           },
           "cam": {
-            "equip_id": "FLIR_A",
+            "equip_id": "Webcam_HD_1",
             "children": []
           }
         }
@@ -187,12 +187,224 @@
         "precipitation": 1,
         "wind_intensity": 0,
         "temperature": 25,
-        "humidity": 900,
+        "humidity": 90,
         "pression": 5
       },
       "sat_info": {
-        "sat_rc": 3,
-        "sat": 3
+        "sat_rc": 5,
+        "sat": 4
+      }
+    },
+    {
+      "id": "cfef707b-cda5-4d63-8117-185f0ef4dca0",
+      "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
+      "dt_start": "2021-12-09T17:46:57.872Z",
+      "dt_end": "2021-12-09T17:47:11.159Z",
+      "uav_setup": {
+        "equip_id": "{1111}",
+        "children": {
+          "b1": {
+            "equip_id": "{BBBB.1112}",
+            "children": []
+          },
+          "b2": {
+            "equip_id": "{BBBB.1111}",
+            "children": []
+          },
+          "rc": {
+            "equip_id": "RC_1",
+            "children": []
+          },
+          "cam": {
+            "equip_id": "Webcam_HD_1",
+            "children": []
+          }
+        }
+      },
+      "meteo_info": {
+        "clouds_coverage": 1,
+        "clouds_height": 1,
+        "visibility": 1,
+        "precipitation": 1,
+        "wind_intensity": 0,
+        "temperature": 25,
+        "humidity": 90,
+        "pression": 5
+      },
+      "sat_info": {
+        "sat_rc": 5,
+        "sat": 4
+      }
+    },
+    {
+      "id": "d113b25e-918d-4024-b71a-22cd8f5cc140",
+      "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
+      "dt_start": "2021-12-09T17:52:06.839Z",
+      "dt_end": "2021-12-09T17:52:39.601Z",
+      "uav_setup": {
+        "equip_id": "{1111}",
+        "children": {
+          "b1": {
+            "equip_id": "{BBBB.1112}",
+            "children": []
+          },
+          "b2": {
+            "equip_id": "{BBBB.1111}",
+            "children": []
+          },
+          "rc": {
+            "equip_id": "RC_1",
+            "children": []
+          },
+          "cam": {
+            "equip_id": "Webcam_HD_1",
+            "children": []
+          }
+        }
+      },
+      "meteo_info": {
+        "clouds_coverage": 1,
+        "clouds_height": 1,
+        "visibility": 1,
+        "precipitation": 1,
+        "wind_intensity": 0,
+        "temperature": 25,
+        "humidity": 90,
+        "pression": 5
+      },
+      "sat_info": {
+        "sat_rc": 5,
+        "sat": 4
+      }
+    },
+    {
+      "id": "1b475283-5234-41e0-a267-6ba30c661807",
+      "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
+      "dt_start": "2021-12-09T17:54:31.978Z",
+      "dt_end": "2021-12-09T17:54:48.048Z",
+      "uav_setup": {
+        "equip_id": "{1111}",
+        "children": {
+          "b1": {
+            "equip_id": "{BBBB.1112}",
+            "children": []
+          },
+          "b2": {
+            "equip_id": "{BBBB.1111}",
+            "children": []
+          },
+          "rc": {
+            "equip_id": "RC_1",
+            "children": []
+          },
+          "cam": {
+            "equip_id": "Webcam_HD_1",
+            "children": []
+          }
+        }
+      },
+      "meteo_info": {
+        "clouds_coverage": 1,
+        "clouds_height": 1,
+        "visibility": 1,
+        "precipitation": 1,
+        "wind_intensity": 0,
+        "temperature": 25,
+        "humidity": 90,
+        "pression": 5
+      },
+      "sat_info": {
+        "sat_rc": 5,
+        "sat": 4
+      }
+    },
+    {
+      "id": "00a9ccb2-c31d-4c85-b75c-745b68e9be2c",
+      "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
+      "dt_start": "2021-12-09T17:56:12.441Z",
+      "dt_end": "2021-12-09T17:56:13.895Z",
+      "uav_setup": {
+        "equip_id": "{1111}",
+        "children": {
+          "b1": {
+            "equip_id": "{BBBB.1112}",
+            "children": []
+          },
+          "b2": {
+            "equip_id": "{BBBB.1111}",
+            "children": []
+          },
+          "rc": {
+            "equip_id": "RC_1",
+            "children": []
+          },
+          "cam": {
+            "equip_id": "Webcam_HD_1",
+            "children": []
+          }
+        }
+      },
+      "meteo_info": {
+        "clouds_coverage": 1,
+        "clouds_height": 1,
+        "visibility": 1,
+        "precipitation": 1,
+        "wind_intensity": 0,
+        "temperature": 25,
+        "humidity": 90,
+        "pression": 5
+      },
+      "sat_info": {
+        "sat_rc": 5,
+        "sat": 4
+      }
+    },
+    {
+      "id": "eb500e4b-f3f4-4c46-b857-b1a46d6c3d0c",
+      "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
+      "dt_start": "2021-12-09T18:02:43.986Z",
+      "dt_end": "2021-12-09T18:02:51.032Z",
+      "uav_setup": {
+        "equip_id": "{2222}",
+        "children": []
+      },
+      "meteo_info": {
+        "clouds_coverage": 1,
+        "clouds_height": 1,
+        "visibility": 1,
+        "precipitation": 1,
+        "wind_intensity": 0,
+        "temperature": 25,
+        "humidity": 90,
+        "pression": 5
+      },
+      "sat_info": {
+        "sat_rc": 5,
+        "sat": 4
+      }
+    },
+    {
+      "id": "78e3b0e9-84d2-49c4-b4df-fab87d9d375e",
+      "activity_id": "444da5e5-dee2-4548-b542-fb88ebed42bb",
+      "dt_start": "2021-12-09T18:04:41.069Z",
+      "dt_end": "2021-12-09T18:04:45.525Z",
+      "uav_setup": {
+        "equip_id": "{2222}",
+        "children": []
+      },
+      "meteo_info": {
+        "clouds_coverage": 1,
+        "clouds_height": 1,
+        "visibility": 1,
+        "precipitation": 1,
+        "wind_intensity": 0,
+        "temperature": 25,
+        "humidity": 90,
+        "pression": 5
+      },
+      "sat_info": {
+        "sat_rc": 5,
+        "sat": 4
       }
     }
   ],
@@ -216,19 +428,19 @@
       "name": "UAV 1",
       "type": "UAV_1",
       "id": "{1111}",
-      "used": true
+      "used": false
     },
     {
       "name": "UAV 2",
       "type": "UAV_2",
       "id": "{2222}",
-      "used": true
+      "used": false
     },
     {
       "name": "Batteria 1",
       "type": "Battery1",
       "id": "{BBBB.1111}",
-      "used": true
+      "used": false
     },
     {
       "name": "Batteria 2",
@@ -240,7 +452,7 @@
       "name": "Batteria X1",
       "type": "Battery2",
       "id": "{BBXX.1111}",
-      "used": true
+      "used": false
     },
     {
       "name": "Batteria X2",
@@ -252,39 +464,19 @@
       "name": "Telecomando M5",
       "type": "Remote1",
       "id": "RC_1",
-      "used": true
+      "used": false
     },
     {
       "name": "FLIR",
       "type": "FLIR",
       "id": "FLIR_A",
-      "used": true
+      "used": false
     },
     {
       "name": "WebCam",
       "type": "Cam",
       "id": "Webcam_HD_1",
       "used": false
-    },
-    {
-      "item": {
-        "name": "UAV 2",
-        "type": "UAV_2",
-        "id": "{2222}",
-        "used": false
-      },
-      "used": true,
-      "id": "8439f539-2194-4c72-bf1a-c6f94c894b10"
-    },
-    {
-      "item": {
-        "name": "UAV 2",
-        "type": "UAV_2",
-        "id": "{2222}",
-        "used": false
-      },
-      "used": true,
-      "id": "768d7133-0e5a-4743-be13-dddc76e075e5"
     }
   ],
   "equipment_types": {

@@ -77,7 +77,7 @@
 				</div>
 			</b-col>
 		</b-row>
-
+<!-- 
 		<div class="buttons">
 			<b-button
 				v-if="missions.length > 0"
@@ -88,6 +88,7 @@
 				Chiudi Attività
 			</b-button>
 		</div>
+-->
 	</b-container>
 </template>
 
@@ -170,13 +171,15 @@ export default {
 		async add_mission() {
 			let m = this.activity.clone_last_mission();
 			await m.save();
+			let ok = await m.assign_equipment();
 
+			if(!ok) {
+				// Notify user that some equipment is already used elsewhere
+				console.error( 'ERR: some equipmenti is already used elsewhere. Review configuration'); // eslint-disable-line
+			}
 			// this.$router.push({name: 'new-mission', params: {
 			// 	a_id: this.activity_id
 			// }});			
-		},
-		async close_activity() {
-
 		}
 	},
 	filters: {
