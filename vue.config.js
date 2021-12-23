@@ -1,4 +1,5 @@
 module.exports = {
+	publicPath: '/vue',
 	pluginOptions: {
 		'style-resources-loader': {
 			preProcessor: 'scss',

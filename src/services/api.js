@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import { new_id } from '@/utilities/new_id.js'
 
-const SERVER_URL = 'http://localhost:3000';
+// const SERVER_URL = 'http://localhost:3000';
+const SERVER_URL = '';
 
 
 function adjust_date( dt ) {
