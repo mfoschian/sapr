@@ -43,8 +43,8 @@ export default {
 	},
 	data() {
 		return {
-			sat_rc: this.value.sat_rc || 0,
-			sat: this.value.sat || 0
+			sat_rc: this.value ? this.value.sat_rc || 0 : 0,
+			sat: this.value ? this.value.sat || 0 : 0
 		}
 	},
 	methods: {

@@ -16,6 +16,8 @@ import PilotsListPage from '@/pages/pilots/pilots-list'
 import PilotEditor from '@/pages/pilots/pilot-edit'
 import PilotNew from '@/pages/pilots/pilot-new'
 
+import ReportsListPage from '@/pages/reports/reports-list'
+
 import { Activity } from '@/models/Activity'
 import { EquipmentType } from '@/models/EquipmentType'
 import { Equipment } from '@/models/Equipment'
@@ -178,6 +180,13 @@ let R = new Router({
 		},
 
 
+		{
+			path: '/reports',
+			name: 'reports-list',
+			component: ReportsListPage,
+			props: true,
+			meta: { requiresAuth: false }
+		},
 
 
 		{

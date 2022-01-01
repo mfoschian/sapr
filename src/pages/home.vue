@@ -9,6 +9,7 @@
 			</li>
 			<li><router-link to="/activities/new">Nuova attività</router-link></li>
 			<li><router-link to="/pilots">Piloti</router-link></li>
+			<li><router-link to="/reports">Reports</router-link></li>
 		</ul>
 	</BasePage>
 </template>
