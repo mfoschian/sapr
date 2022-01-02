@@ -1,4 +1,7 @@
 module.exports = {
+	devServer: {
+		host: 'sapr.protezionecivile.fvg.it'
+	},
 	publicPath: '/vue',
 	pluginOptions: {
 		'style-resources-loader': {

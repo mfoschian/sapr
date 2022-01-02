@@ -3,11 +3,17 @@
 		<b-row v-if="is_configured">
 			<b-col>
 				<div v-if="mission.dt_start">Decollo: {{ mission.dt_start | dtm }}</div>
-				<b-button v-else @click="take_off">Decolla</b-button>
+				<b-button v-else @click="take_off">
+					<img :src="require('@/assets/icons/drone-take-off.svg')"/>
+					Decollo
+				</b-button>
 			</b-col>
 			<b-col v-if="mission.dt_start">
 				<div v-if="mission.dt_end">Atterraggio: {{ mission.dt_end | dtm }}</div>
-				<b-button v-else @click="landed" :disabled="mission.dt_start == null">Atterrato</b-button>
+				<b-button v-else @click="landed" :disabled="mission.dt_start == null">
+					<img :src="require('@/assets/icons/drone-landing.svg')"/>
+					Atterraggio
+				</b-button>
 			</b-col>
 			<b-col v-if="main_equip">
 				{{ main_equip.name }}
@@ -15,7 +21,7 @@
 			<b-col>
 				<b-button variant="info"
 					@click="goto_configuration"
-					:disabled="mission.dt_start != null && mission.dt_end == null"
+					:disabled="!config_enabled"
 				>Configurazione</b-button>
 			</b-col>
 		</b-row>
@@ -39,6 +45,11 @@ export default {
 	computed: {
 		is_configured() {
 			return this.mission != null && this.mission.is_configured();
+		},
+		config_enabled() {
+			return this.mission.dt_start == null
+				|| this.mission.dt_end != null
+			;
 		},
 		main_equip() {
 			let m = this.mission;
