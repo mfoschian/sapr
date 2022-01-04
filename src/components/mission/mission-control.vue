@@ -2,14 +2,14 @@
 	<b-container fluid class="mission">
 		<b-row v-if="is_configured">
 			<b-col>
-				<div v-if="mission.dt_start">Decollo: {{ mission.dt_start | dtm }}</div>
+				<div v-if="mission.dt_start">Decollo:<br>{{ mission.dt_start | dtm }}</div>
 				<b-button v-else @click="take_off">
 					<img :src="require('@/assets/icons/drone-take-off.svg')"/>
 					Decollo
 				</b-button>
 			</b-col>
 			<b-col v-if="mission.dt_start">
-				<div v-if="mission.dt_end">Atterraggio: {{ mission.dt_end | dtm }}</div>
+				<div v-if="mission.dt_end">Atterraggio:<br>{{ mission.dt_end | dtm }}</div>
 				<b-button v-else @click="landed" :disabled="mission.dt_start == null">
 					<img :src="require('@/assets/icons/drone-landing.svg')"/>
 					Atterraggio

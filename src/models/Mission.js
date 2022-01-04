@@ -47,12 +47,12 @@ export class Mission {
 	// 	return store.state.missions.filter( m => m.activity_id == activity_id );
 	// }
 
-	landed() {
+	async landed() {
 		this.dt_end = new Date();
 		return this.save();
 	}
 
-	take_off() {
+	async take_off() {
 		this.dt_start = new Date();
 		return this.save();
 	}
