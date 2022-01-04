@@ -15,6 +15,12 @@
 					Atterraggio
 				</b-button>
 			</b-col>
+			<b-col v-if="pilot">
+				{{ pilot.name }}
+			</b-col>
+			<b-col v-else>
+				Seleziona Pilota
+			</b-col>
 			<b-col v-if="main_equip">
 				{{ main_equip.name }}
 			</b-col>
@@ -35,6 +41,7 @@
 
 <script>
 // import { Mission } from '@/models/Mission'
+import { Pilot } from '@/models/Pilot'
 import { Equipment } from '@/models/Equipment'
 import { formatDtTm } from '@/utilities/dates.js'
 
@@ -58,6 +65,12 @@ export default {
 
 			let e = Equipment.find_by_id( m.uav_setup.equip_id );
 			return e;
+		},
+		pilot() {
+			let m = this.mission;
+			if( !m || !m.pilot_id ) return null;
+			let p = Pilot.get( m.pilot_id );
+			return p;
 		}
 	},
 	methods: {

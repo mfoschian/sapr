@@ -1,6 +1,13 @@
 module.exports = {
 	devServer: {
-		host: 'sapr.protezionecivile.fvg.it'
+		host: 'sapr.protezionecivile.fvg.it',
+		proxy: {
+			'^/reports' : {
+				target: 'http://sapr.protezionecivile.fvg.it',
+				ws: true,
+				changeOrigin: true
+			}
+		}
 	},
 	publicPath: '/vue',
 	pluginOptions: {

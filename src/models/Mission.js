@@ -14,6 +14,7 @@ export class Mission {
 		this.uav_setup = m.uav_setup || null; // assignment ovvero: { equip_id, children: {slot_id: assignment} }
 		this.meteo_info = m.meteo_info || null;
 		this.sat_info = m.sat_info || null;
+		this.pilot_id = m.pilot_id || null;
 	}
 
 	is_configured() { return this.uav_setup != null && this.uav_setup.equip_id != null; }
@@ -32,7 +33,8 @@ export class Mission {
 			// configuration_id: this.configuration_id
 			uav_setup: this.uav_setup || null,
 			meteo_info: this.meteo_info,
-			sat_info: this.sat_info
+			sat_info: this.sat_info,
+			pilot_id: this.pilot_id
 		});
 	}
 
@@ -82,7 +84,8 @@ export class Mission {
 			activity_id: this.activity_id,
 			uav_setup : deep_clone( this.uav_setup ),
 			meteo_info : deep_clone( this.meteo_info ),
-			sat_info : deep_clone( this.sat_info )
+			sat_info : deep_clone( this.sat_info ),
+			pilot_id: this.pilot_id
 		};
 
 		return new Mission( m );
