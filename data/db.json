@@ -428,55 +428,55 @@
       "name": "UAV 1",
       "type": "UAV_1",
       "id": "{1111}",
-      "used": false
+      "mission_id": null
     },
     {
       "name": "UAV 2",
       "type": "UAV_2",
       "id": "{2222}",
-      "used": false
+      "mission_id": null
     },
     {
       "name": "Batteria 1",
       "type": "Battery1",
       "id": "{BBBB.1111}",
-      "used": false
+      "mission_id": null
     },
     {
       "name": "Batteria 2",
       "type": "Battery1",
       "id": "{BBBB.1112}",
-      "used": false
+      "mission_id": null
     },
     {
       "name": "Batteria X1",
       "type": "Battery2",
       "id": "{BBXX.1111}",
-      "used": false
+      "mission_id": null
     },
     {
       "name": "Batteria X2",
       "type": "Battery2",
       "id": "{BBXX.1112}",
-      "used": false
+      "mission_id": null
     },
     {
       "name": "Telecomando M5",
       "type": "Remote1",
       "id": "RC_1",
-      "used": false
+      "mission_id": null
     },
     {
       "name": "FLIR",
       "type": "FLIR",
       "id": "FLIR_A",
-      "used": false
+      "mission_id": null
     },
     {
       "name": "WebCam",
       "type": "Cam",
       "id": "Webcam_HD_1",
-      "used": false
+      "mission_id": null
     }
   ],
   "equipment_types": {
