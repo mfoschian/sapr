@@ -10,6 +10,7 @@
 						:placeholder="child.placeholder"
 						:accepts="child.accepts"
 						:assignment="child.assignment"
+						:mission_id="mission_id"
 						@changed="child_changed($event,child.id)"
 						:read_only="read_only"
 					/>
@@ -34,7 +35,8 @@ export default {
 		placeholder: { type: String, default: "" },
 		accepts: { type: Array, default: () => [] }, // [ equip_type_id, ... ]
 		required: { type: Boolean, default: false },
-		assignment: { type: Object, default: null }, // { equip_id, children {slot_id: assignment } }
+		assignment: { type: Object, default: null }, // { equip_id, mission_id, children {slot_id: assignment } }
+		mission_id: { type: String, defult: null },
 		read_only: { type: Boolean, deafult: false }
 	},
 	data() {
@@ -111,7 +113,7 @@ export default {
 
 			if( res.new_id != null ) {
 				// Segna come occupato l'equipment scelto 
-				await Equipment.assign( res.new_id );
+				await Equipment.assign( res.new_id, this.mission_id );
 			}
 
 			// Propaga la modifica al contenitore dello slot
@@ -124,7 +126,7 @@ export default {
 			this.$emit( 'changed', {} );
 		},
 		child_changed( ass, slot_id ) {
-			// Qui devo propagare la modifica dell'assegnazione figla al contenitore...
+			// Qui devo propagare la modifica dell'assegnazione figlia al contenitore...
 			// Significa che devo duplicare l'assegnazione corrente (con lo slot indicato contenente la modifica al figlio)
 			// e passsarla al contenitore come nuova assengazione
 			// Il free e l'assign dei figli dovrebbe essere già a posto in quanto gestita dal figlio stesso

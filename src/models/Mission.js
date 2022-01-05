@@ -140,15 +140,12 @@ export class Mission {
 		let ids = [];
 		this._collect_equipment_ids( ids, this.uav_setup );
 
-		let ok = await Equipment.assign_multiple( ids );
+		let ok = await Equipment.assign_multiple( ids, this.id );
 		return ok;
 	}
 
 	async free_equipment() {
-		let ids = [];
-		this._collect_equipment_ids( ids, this.uav_setup );
-
-		let ok = await Equipment.free_multiple( ids );
+		let ok = await Equipment.free_multiple( this.id );
 		return ok;
 	}
 }

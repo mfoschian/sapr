@@ -175,7 +175,7 @@ export default {
 
 			if(!ok) {
 				// Notify user that some equipment is already used elsewhere
-				console.error( 'ERR: some equipmenti is already used elsewhere. Review configuration'); // eslint-disable-line
+				console.error( 'ERR: some equipment is already used elsewhere. Review configuration'); // eslint-disable-line
 			}
 			// this.$router.push({name: 'new-mission', params: {
 			// 	a_id: this.activity_id

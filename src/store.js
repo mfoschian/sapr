@@ -66,13 +66,26 @@ let _store = new Vuex.Store({
 
 		setEquipments( state, data ) { state.equipments = data;	},
 		setEquipmentTypes( state, data ) { state.equipment_types = data; },
-		setEquipmentAssignment( state, eq ) {
-			if(!eq) return;
-			eq.used = true;
+		setEquipmentAssignment( state, { equip, mission_id } ) {
+			if(!equip) return;
+			equip.mission_id = mission_id;
 		},
-		removeEquipmentAssignment( state, eq ) {
-			if(!eq) return;
-			eq.used = false;
+		removeEquipmentAssignment( state, data ) {
+			let equip = data.equip;
+			if(!equip) return;
+			equip.mission_id = null;
+		},
+		setEquipmentsAssignment( state, { equips, mission_id } ) {
+			if(! Array.isArray(equips) ) return;
+			equips.forEach( equip => {
+				equip.mission_id = mission_id;
+			});
+		},
+		removeEquipmentsAssignment( state, equips ) {
+			if(! Array.isArray(equips) ) return;
+			equips.forEach( equip => {
+				equip.mission_id = null;
+			});
 		},
 
 		setPilots( state, data ) { state.pilots = data; },
@@ -151,11 +164,19 @@ let _store = new Vuex.Store({
 		},
 		async assignEquipment( {commit}, data ) {
 			commit( 'setEquipmentAssignment', data );
-			await API.save_equipment( data );
+			await API.save_equipment( data.equip );
 		},
 		async freeEquipment( {commit}, data ) {
 			commit( 'removeEquipmentAssignment', data );
 			await API.save_equipment( data );
+		},
+		async assignEquipments( {commit}, data ) {
+			commit( 'setEquipmentsAssignment', data );
+			await API.save_equipments( data );
+		},
+		async freeEquipments( {commit}, data ) {
+			commit( 'removeEquipmentsAssignment', data );
+			await API.save_equipments( data );
 		},
 
 

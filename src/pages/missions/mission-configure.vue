@@ -4,7 +4,7 @@
 			<PilotSelector :value="pilot_id" @input="l_pilot_id=$event;save_config()" :read_only="read_only" />
 		</ConfigSection>
 		<ConfigSection title="Configurazione Drone" :img="require('@/assets/icons/drone.svg')">
-			<UASConfiguration :value="uav_info" @input="l_uav_info=$event;save_config()" :read_only="read_only" />
+			<UASConfiguration :value="uav_info" :mission_id="mission_id" @input="l_uav_info=$event;save_config()" :read_only="read_only" />
 		</ConfigSection>
 		<ConfigSection title="Numero satelliti agganciati" :img="require('@/assets/icons/satellite.svg')">
 			<SatelliteDataForm :value="sat_info" @input="l_sat_info=$event;save_config()" :read_only="read_only" />

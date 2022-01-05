@@ -6,6 +6,7 @@
 			:label="label" :placeholder="placeholder"
 			:accepts="available_uav_types"
 			:assignment="value"
+			:mission_id="mission_id"
 			:read_only="read_only"
 			@changed="$emit('input',$event)"
 		/>
@@ -29,6 +30,7 @@ export default {
 		available_uav_types: { type: Array, default: () => ['UAV_1', 'UAV_2'] }, // TODO: mettere l'array in una prop nel db e togliere la cablatura
 		assignments: { type: Array, default: () => [] },
 		value: { type: Object, default: null },
+		mission_id: { type: String, default: null },
 		read_only: { type: Boolean, deafult: false }
 	},
 	data() {

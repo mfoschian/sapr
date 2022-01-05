@@ -74,6 +74,11 @@ let API = {
 	save_equipment: async function( item ) {
 		return upsert( SERVER_URL + '/equipments' , item );
 	},
+	save_equipments: async function( items ) {
+		return axios.put( SERVER_URL + '/equipments/batch_update', items ).then( (result) => {
+			return result.data;
+		})
+	},
 
 
 	get_equipment_types: async function() {
