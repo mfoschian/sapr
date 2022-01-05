@@ -54,11 +54,12 @@ export class Activity {
 		this.scenary = d.scenary || 0;
 		this.flight_type = d.flight_type || 0;
 		this.type = d.type || 0;
+		this.dt_closed = d.dt_closed;
 	}
 
-	save() {
+	async save() {
 		// debugger; // eslint-disable-line
-		store.dispatch('saveActivity', {
+		return store.dispatch('saveActivity', {
 			id: this.id,
 			title: this.title,
 			dt: this.dt,
@@ -71,7 +72,8 @@ export class Activity {
 			category: this.category,
 			scenary: this.scenary,
 			flight_type: this.flight_type,
-			type: this.type
+			type: this.type,
+			dt_closed: this.dt_closed
 		});
 	}
 
@@ -114,16 +116,25 @@ export class Activity {
 		return m.save();
 	}
 
+	async close() {
+		this.dt_closed = new Date();
+		return this.save();
+	}
 
 
-
-	static async read_all() {
+	static async read_all_reactive() {
 		// debugger; // eslint-disable-line
 		await store.dispatch('loadActivities');
 		await store.dispatch('loadMissions');
+		return store.state.activities;
+	}
+
+	static async read_all() {
+		// debugger; // eslint-disable-line
+		await Activity.read_all_reactive();
 		return store.state.activities.map( a => new Activity(a) );
 	}
-	
+
 	static get( id ) {
 		// debugger; // eslint-disable-line
 		let a = store.state.activities.find( it => it.id == id ) || null;

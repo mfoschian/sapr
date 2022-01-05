@@ -4,23 +4,31 @@
 		<ActivityViewer v-for="a in activities_to_show" :key="a.id"
 			class="list-item"
 			:activity="a"
+			@changed="load_data"
 		/>
 	</BasePage>
 </template>
 
 <script>
 import ActivityViewer from '@/components/activity/activity-viewer'
+import { Activity } from '@/models/Activity'
 import BasePage from '@/pages/base-page'
 
 export default {
 	components: { BasePage, ActivityViewer },
 	props: {
 		limit: { type: Number, default: 5 },
-		activities: { type: Array, default: () => [] }
+		// activities: { type: Array, default: () => [] }
+	},
+	data() {
+		return {
+			activities: []
+		};
 	},
 	computed: {
 		activities_to_show() {
-			let res = this.activities.concat().sort( (a,b) => a.dt < b.dt ? 1 : a.dt > b.dt ? -1 : 0 );
+			let items = this.activities.map( a => new Activity(a) );
+			let res = items.sort( (a,b) => a.dt < b.dt ? 1 : a.dt > b.dt ? -1 : 0 );
 			return res.slice(0,this.limit);
 		},
 		title() {
@@ -34,6 +42,15 @@ export default {
 			return "Ci sono " + l + " attività";
 		}
 	},
+	methods: {
+		async load_data() {
+			let acts = await Activity.read_all_reactive()
+			this.activities = acts.filter( a => a.dt_closed == null );
+		}
+	},
+	created() {
+		this.load_data();
+	}
 }
 </script>
 

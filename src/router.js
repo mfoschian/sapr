@@ -77,10 +77,11 @@ let R = new Router({
 			name: 'list-activity',
 			component: ActivityList,
 			props: true,
-			beforeEnter: async (to,from,next) => {
-				to.params.activities = await Activity.read_all();
-				next();
-			},
+			// beforeEnter: async (to,from,next) => {
+			// 	let acts = await Activity.read_all_reactive()
+			// 	to.params.activities = acts.filter( a => a.dt_closed == null );
+			// 	next();
+			// },
 			meta: { requiresAuth: false }
 		},
 		{

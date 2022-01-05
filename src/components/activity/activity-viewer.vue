@@ -1,7 +1,14 @@
 <template>
 	<b-container fluid>
 		<b-row>
-			<b-col sm="10"></b-col>
+			<b-col sm="2">
+				<b-button v-if="missions.length > 0"
+					size="sm" title="Chiudi attività" @click="close_activity"
+				>
+					<b-icon-lock-fill />
+				</b-button>
+			</b-col>
+			<b-col sm="8"></b-col>
 			<b-col sm="2">
 				<b-button size="sm" title="edit" :to="'/activities/'+activity.id+'/edit'"><b-icon-pencil /></b-button>
 			</b-col>
@@ -180,6 +187,14 @@ export default {
 			// this.$router.push({name: 'new-mission', params: {
 			// 	a_id: this.activity_id
 			// }});			
+		},
+		async close_activity() {
+			if( !this.activity ) return;
+			let res = confirm( "Chiudo l'attività ?" );
+			if( res == true ) {
+				await this.activity.close();
+				this.$emit('changed');
+			}
 		}
 	},
 	filters: {

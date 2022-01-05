@@ -16,6 +16,7 @@ function adjust_date( dt ) {
 
 function adjust_activity( a ) {
 	a.dt = adjust_date( a.dt );
+	a.dt_closed = adjust_date( a.dt_closed );
 	return a;
 }
 
