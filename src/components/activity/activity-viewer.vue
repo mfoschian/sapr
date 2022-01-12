@@ -35,7 +35,7 @@
 		</b-row>
 
 		<b-row>
-			<b-col sm="2">Coordinate</b-col>
+			<b-col sm="2">Coordinate <a :href="map_link" target="_blank"><b-icon-map /></a></b-col>
 			<b-col sm="3">Lat: {{ activity.lat }}</b-col>
 			<b-col sm="3">Lon: {{ activity.lon }}</b-col>
 			<b-col sm="3">Alt: {{ activity.alt }}</b-col>
@@ -172,6 +172,9 @@ export default {
 		},
 		last_mission() {
 			return this.ordered_missions[0];
+		},
+		map_link() {
+			return "https://www.google.it/maps/@"+this.activity.lat + "," + this.activity.lon+ ",15z";
 		}
 	},
 	methods: {
