@@ -6,7 +6,32 @@ module.exports = {
 				target: 'http://sapr.protezionecivile.fvg.it',
 				ws: true,
 				changeOrigin: true
-			}
+			},
+			'^/activities' : {
+				target: 'http://sapr.protezionecivile.fvg.it',
+				ws: true,
+				changeOrigin: true
+			},
+			'^/missions' : {
+				target: 'http://sapr.protezionecivile.fvg.it',
+				ws: true,
+				changeOrigin: true
+			},
+			'^/pilots' : {
+				target: 'http://sapr.protezionecivile.fvg.it',
+				ws: true,
+				changeOrigin: true
+			},
+			'^/equipments' : {
+				target: 'http://sapr.protezionecivile.fvg.it',
+				ws: true,
+				changeOrigin: true
+			},
+			'^/equipment_types' : {
+				target: 'http://sapr.protezionecivile.fvg.it',
+				ws: true,
+				changeOrigin: true
+			},
 		}
 	},
 	publicPath: '/vue',

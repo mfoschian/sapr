@@ -3,8 +3,8 @@ import axios from 'axios';
 import { new_id } from '@/utilities/new_id.js'
 
 // const SERVER_URL = 'http://localhost:3000';
-// const SERVER_URL = '';
-const SERVER_URL = 'http://sapr.protezionecivile.fvg.it';
+const SERVER_URL = '';
+// const SERVER_URL = 'http://sapr.protezionecivile.fvg.it';
 
 
 function adjust_date( dt ) {
