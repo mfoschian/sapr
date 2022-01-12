@@ -28,7 +28,7 @@
 				<b-col >
 					<b-card title="Nuova attività" >
 						<!-- <b-card-text>Gestisci le attività che hai creato</b-card-text> -->
-						<div class="p-4">
+						<div class="centered">
 							<b-icon icon="plus-circle" font-scale="4"></b-icon>
 							<!-- <b-icon icon="plus-circle" animation="spin" font-scale="4" shift-v="8"></b-icon> -->
 						</div>
@@ -142,5 +142,8 @@ export default {
 			box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.15) !important;
 		}
 	}
+}
+.centered {
+	text-align: center;
 }
 </style> 
