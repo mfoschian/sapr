@@ -6,11 +6,12 @@ import ErrorPage from '@/pages/errors'
 import ActivityList from '@/pages/activities/activities-list'
 import ActivityNew from '@/pages/activities/activity-new'
 import ActivityEditor from '@/pages/activities/activity-edit'
+import ActivityView from '@/pages/activities/activity-view'
 
-import MissionsListPage from '@/pages/missions/missions-list'
-import MissionNewPage from '@/pages/missions/mission-new'
-import MissionConfigurePage from '@/pages/missions/mission-configure'
-import MissionControlPage from '@/pages/missions/mission-control'
+// import MissionsListPage from '@/pages/missions/missions-list'
+// import MissionNewPage from '@/pages/missions/mission-new'
+// import MissionConfigurePage from '@/pages/missions/mission-configure'
+// import MissionControlPage from '@/pages/missions/mission-control'
 
 import PilotsListPage from '@/pages/pilots/pilots-list'
 import PilotEditor from '@/pages/pilots/pilot-edit'
@@ -112,33 +113,40 @@ let R = new Router({
 			}
 		},
 		{
-			path: '/activities/:activity_id/missions',
-			name: 'activity-missions',
-			component: MissionsListPage,
+			path: '/activities/:activity_id',
+			name: 'activity-view',
+			component: ActivityView,
 			meta: { requiresAuth: false },
 			props: true,
 		},
-		{
-			path: '/activities/:activity_id/missions/new',
-			name: 'new-mission',
-			component: MissionNewPage,
-			meta: { requiresAuth: false },
-			props: true,
-		},
-		{
-			path: '/activities/:activity_id/missions/:mission_id',
-			name: 'control-mission',
-			component: MissionControlPage,
-			meta: { requiresAuth: false },
-			props: true,
-		},
-		{
-			path: '/activities/:activity_id/missions/:mission_id/configure',
-			name: 'configure-mission',
-			component: MissionConfigurePage,
-			meta: { requiresAuth: false },
-			props: true,
-		},
+		// {
+		// 	path: '/activities/:activity_id/missions',
+		// 	name: 'activity-missions',
+		// 	component: MissionsListPage,
+		// 	meta: { requiresAuth: false },
+		// 	props: true,
+		// },
+		// {
+		// 	path: '/activities/:activity_id/missions/new',
+		// 	name: 'new-mission',
+		// 	component: MissionNewPage,
+		// 	meta: { requiresAuth: false },
+		// 	props: true,
+		// },
+		// {
+		// 	path: '/activities/:activity_id/missions/:mission_id',
+		// 	name: 'control-mission',
+		// 	component: MissionControlPage,
+		// 	meta: { requiresAuth: false },
+		// 	props: true,
+		// },
+		// {
+		// 	path: '/activities/:activity_id/missions/:mission_id/configure',
+		// 	name: 'configure-mission',
+		// 	component: MissionConfigurePage,
+		// 	meta: { requiresAuth: false },
+		// 	props: true,
+		// },
 
 		{
 			path: '/pilots',

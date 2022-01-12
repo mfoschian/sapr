@@ -7,7 +7,8 @@
 				<b-col>
 					<b-card title="Missione in corso" >
 						<!-- <b-card-text>Gestisci le attività che hai creato</b-card-text> -->
-						<b-link :to="{name: 'control-mission', params: active_mission_params }" class="stretched-link"/>
+						<!-- <b-link :to="{name: 'control-mission', params: active_mission_params }" class="stretched-link"/> -->
+						<b-link :to="{name: 'activity-view', params: active_mission_params }" class="stretched-link"/>
 					</b-card>
 				</b-col>
 			</b-row>
